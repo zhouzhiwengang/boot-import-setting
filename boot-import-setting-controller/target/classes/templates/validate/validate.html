@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>字段验证器</title>
+<!-- 引入的css文件  -->
+<link rel="stylesheet" type="text/css" th:href="@{/Bootstrap/style.css}" />
+<link th:href="@{/Bootstrap/bootstrap.min.css}" rel="stylesheet" />
+<!-- 引入的js文件 -->
+<script th:src="@{/Bootstrap/jquery-1.9.1.min.js}"></script>
+<script th:src="@{/Bootstrap/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/Bootstrap/bootbox/js/bootbox.min.}"></script>
+</head>
+<body>
+	<div class="box">
+		<div class="container">
+		
+			<div class="container content_width">
+                <div class="person_search">
+                    <div class="search_input">
+                        <div class="input-group mb-3">
+                            <input id="Ktext" type="text" class="form-control" placeholder="请输入名称">
+                        </div>
+                    </div>
+                    <div class="search_input">
+                        <div class="input-group mb-3">
+                            <input id="Ktext" type="text" class="form-control" placeholder="请选择状态">
+                        </div>
+                    </div>
+                    <div class="search_input">
+                        <button class="btn btn-primary search_btn" type="button" id="search_btn">查询</button>
+                        <button class="btn btn-primary search_btn" type="button" id="back_btn">重置</button>
+                    </div>
+                </div>
+                <div class="line"></div>
+            </div>
+
+			<div class="export">
+				<a th:href="@{/api/column-validate/insertPage}"
+					class="btn btn-info btn-sm">添加</a>
+			</div>
+			<table class="table table-striped">
+				<tr>
+					<th class="col-md-1">名称</th>
+					<th class="col-md-2">内容</th>
+					<th class="col-md-1">主键</th>
+					<th class="col-md-1">创建时间</th>
+					<th class="col-md-1">创建人</th>
+					<th class="col-md-1">更新时间</th>
+					<th class="col-md-1">更新人</th>
+					<th class="col-md-1">状态</th>
+					<th class="col-md-1">删除标识</th>
+					<th class="col-md-2">操作</th>
+				</tr>
+				<!--Thymeleaf迭代语句each  -->
+				<tr th:each="obj : ${pageInfo.list}">
+					<td th:text="${obj.validateName}"></td>
+					<td th:text="${obj.validateContent}"></td>
+					<td th:text="${obj.sid}"></td>
+					<td th:text="${obj.createBy}"></td>
+					<td th:text="${#dates.format(obj.createDt,'yyyy-MM-dd')}"></td>
+					<td th:text="${obj.updateBy}"></td>
+					<td th:text="${#dates.format(obj.updateDt,'yyyy-MM-dd')}"></td>
+					<!--Thymeleaf 判断语句:if 和 switch  -->
+					<td th:if="${obj.state} == 1" th:text="启用"></td>
+					<td th:if="${obj.state} == 2" th:text="禁用"></td>
+
+					<td th:if="${obj.deleteFlag} == 1" th:text="未删除"></td>
+					<td th:if="${obj.deleteFlag} == 2" th:text="已删除"></td>
+					<td>
+						<!--单个参数值传递  --> <a
+						th:href="@{/api/column-validate/updatePage(sid=${obj.sid})}"
+						class="btn btn-info btn-sm">修改</a> <!--多个参数值传递  --> <a
+						th:href="@{/api/column-validate/delete(sid=${obj.sid},version=${obj.version})}"
+						class="btn btn-info btn-sm">删除</a>
+					</td>
+				</tr>
+			</table>
+
+			<nav>
+				<ul class="pagination">
+					<li><a th:if="${not isFirstPage}"
+						th:href="@{${'api/column-validate/allColumnValidates'}(pageNum=${pageNum-1},pageSize=${pageSize})}"
+						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+					</a> <a th:if="${isFirstPage}" href="javascript:void(0);"
+						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+					</a></li>
+
+					<li th:each="pageNo : ${#numbers.sequence(1, totalPages)}"><a
+						th:if="${pageNum eq pageNo}" href="javascript:void(0);"> <span
+							th:text="${pageNo}"></span>
+					</a> <a th:if="${not (pageNum eq pageNo)}"
+						th:href="@{${'api/column-validate/allColumnValidates'}(pageNum=${pageNo},pageSize=${pageSize})}">
+							<span th:text="${pageNo}"></span>
+					</a></li>
+
+					<li><a th:if="${not isLastPage}"
+						th:href="@{${'api/column-validate/allColumnValidates'}(pageNum=${pageNum+1},pageSize=${pageSize})}"
+						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+					</a> <a th:if="${isLastPage}" href="javascript:void(0);"
+						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+					</a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzg.mapper.ColumnMapper">
+  <resultMap id="BaseResultMap" type="com.zzg.entity.Column">
+    <id column="sid" jdbcType="VARCHAR" property="sid" />
+    <result column="alias" jdbcType="VARCHAR" property="alias" />
+    <result column="name_" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="length" jdbcType="INTEGER" property="length" />
+    <result column="decimal_" jdbcType="INTEGER" property="decimal" />
+    <result column="required" jdbcType="VARCHAR" property="required" />
+    <result column="primary_" jdbcType="VARCHAR" property="primary" />
+    <result column="default_value" jdbcType="VARCHAR" property="defaultValue" />
+    <result column="comment_" jdbcType="VARCHAR" property="comment" />
+    <result column="create_dt" jdbcType="TIMESTAMP" property="createDt" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="update_dt" jdbcType="TIMESTAMP" property="updateDt" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="bus_table_id" jdbcType="VARCHAR" property="busTableId" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+    <result column="code_" jdbcType="VARCHAR" property="code" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ucas_bus_column
+    where sid = #{sid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zzg.entity.Column">
+    insert into ucas_bus_column (sid, `alias`, name_, 
+      `type`, `length`, decimal_, 
+      required, primary_, default_value, 
+      comment_, create_dt, create_by, 
+      update_dt, update_by, bus_table_id, 
+      version, `state`, delete_flag, 
+      code_)
+    values (#{sid,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{length,jdbcType=INTEGER}, #{decimal,jdbcType=INTEGER}, 
+      #{required,jdbcType=VARCHAR}, #{primary,jdbcType=VARCHAR}, #{defaultValue,jdbcType=VARCHAR}, 
+      #{comment,jdbcType=VARCHAR}, #{createDt,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, 
+      #{updateDt,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{busTableId,jdbcType=VARCHAR}, 
+      #{version,jdbcType=INTEGER}, #{state,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=VARCHAR}, 
+      #{code,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zzg.entity.Column">
+    update ucas_bus_column
+    set `alias` = #{alias,jdbcType=VARCHAR},
+      name_ = #{name,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR},
+      `length` = #{length,jdbcType=INTEGER},
+      decimal_ = #{decimal,jdbcType=INTEGER},
+      required = #{required,jdbcType=VARCHAR},
+      primary_ = #{primary,jdbcType=VARCHAR},
+      default_value = #{defaultValue,jdbcType=VARCHAR},
+      comment_ = #{comment,jdbcType=VARCHAR},
+      create_dt = #{createDt,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_dt = #{updateDt,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      bus_table_id = #{busTableId,jdbcType=VARCHAR},
+      version = #{version,jdbcType=INTEGER},
+      `state` = #{state,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+      code_ = #{code,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select sid, `alias`, name_, `type`, `length`, decimal_, required, primary_, default_value, 
+    comment_, create_dt, create_by, update_dt, update_by, bus_table_id, version, `state`, 
+    delete_flag, code_
+    from ucas_bus_column
+    where sid = #{sid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select sid, `alias`, name_, `type`, `length`, decimal_, required, primary_, default_value, 
+    comment_, create_dt, create_by, update_dt, update_by, bus_table_id, version, `state`, 
+    delete_flag, code_
+    from ucas_bus_column
+  </select>
+</mapper>

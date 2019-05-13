@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzg.mapper.ColumnWidgetMapper">
+  <resultMap id="BaseResultMap" type="com.zzg.entity.ColumnWidget">
+    <id column="sid" jdbcType="VARCHAR" property="sid" />
+    <result column="widget_name" jdbcType="VARCHAR" property="widgetName" />
+    <result column="widget_type" jdbcType="INTEGER" property="widgetType" />
+    <result column="widget_value" jdbcType="VARCHAR" property="widgetValue" />
+    <result column="widget_sett" jdbcType="VARCHAR" property="widgetSett" />
+    <result column="dict_code" jdbcType="VARCHAR" property="dictCode" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_dt" jdbcType="TIMESTAMP" property="createDt" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_dt" jdbcType="TIMESTAMP" property="updateDt" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ucas_bus_column_widget
+    where sid = #{sid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zzg.entity.ColumnWidget">
+    insert into ucas_bus_column_widget (sid, widget_name, widget_type, 
+      widget_value, widget_sett, dict_code, 
+      create_by, create_dt, update_by, 
+      update_dt, version, delete_flag, 
+      `state`)
+    values (#{sid,jdbcType=VARCHAR}, #{widgetName,jdbcType=VARCHAR}, #{widgetType,jdbcType=INTEGER}, 
+      #{widgetValue,jdbcType=VARCHAR}, #{widgetSett,jdbcType=VARCHAR}, #{dictCode,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createDt,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateDt,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{deleteFlag,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zzg.entity.ColumnWidget">
+    update ucas_bus_column_widget
+    set widget_name = #{widgetName,jdbcType=VARCHAR},
+      widget_type = #{widgetType,jdbcType=INTEGER},
+      widget_value = #{widgetValue,jdbcType=VARCHAR},
+      widget_sett = #{widgetSett,jdbcType=VARCHAR},
+      dict_code = #{dictCode,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_dt = #{createDt,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_dt = #{updateDt,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=INTEGER},
+      delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+      `state` = #{state,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select sid, widget_name, widget_type, widget_value, widget_sett, dict_code, create_by, 
+    create_dt, update_by, update_dt, version, delete_flag, `state`
+    from ucas_bus_column_widget
+    where sid = #{sid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select sid, widget_name, widget_type, widget_value, widget_sett, dict_code, create_by, 
+    create_dt, update_by, update_dt, version, delete_flag, `state`
+    from ucas_bus_column_widget
+  </select>
+  
+  <update id="updateDeleteFlag" parameterType="map">
+  		 update ucas_bus_column_widget
+  		 	<set>
+  		 		<if test="state != null and  state != ''">
+  		 		 	`state` = #{state,jdbcType=VARCHAR},
+  		 		</if>
+  		 		<if test="deleteFlag != null and  deleteFlag != ''">
+  		 			 delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+  		 		</if>
+  		 	</set>
+  		 where 1 =1 
+  		 <if test="sid != null and  sid != ''">
+  		 	and sid = #{sid,jdbcType=VARCHAR}
+  		 </if>
+  </update>
+  
+</mapper>

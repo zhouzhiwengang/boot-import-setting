@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzg.mapper.ColumnValidateRelationshipMapper">
+  <resultMap id="BaseResultMap" type="com.zzg.entity.ColumnValidateRelationship">
+    <id column="sid" jdbcType="VARCHAR" property="sid" />
+    <result column="column_sid" jdbcType="VARCHAR" property="columnSid" />
+    <result column="column_validate_sid" jdbcType="VARCHAR" property="columnValidateSid" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ucas_bus_column_validate_relationship
+    where sid = #{sid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zzg.entity.ColumnValidateRelationship">
+    insert into ucas_bus_column_validate_relationship (sid, column_sid, column_validate_sid
+      )
+    values (#{sid,jdbcType=VARCHAR}, #{columnSid,jdbcType=VARCHAR}, #{columnValidateSid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zzg.entity.ColumnValidateRelationship">
+    update ucas_bus_column_validate_relationship
+    set column_sid = #{columnSid,jdbcType=VARCHAR},
+      column_validate_sid = #{columnValidateSid,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select sid, column_sid, column_validate_sid
+    from ucas_bus_column_validate_relationship
+    where sid = #{sid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select sid, column_sid, column_validate_sid
+    from ucas_bus_column_validate_relationship
+  </select>
+</mapper>
