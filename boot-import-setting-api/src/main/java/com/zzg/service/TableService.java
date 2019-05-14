@@ -1,7 +1,12 @@
 package com.zzg.service;
 
+import java.util.Map;
 import com.zzg.common.core.service.BaseService;
 import com.zzg.entity.Table;
 
 public interface TableService extends BaseService<Table> {
+	// 更新通用功能
+	int updateDeleteFlag(Map map);
+
+	int update(Table record);
 }

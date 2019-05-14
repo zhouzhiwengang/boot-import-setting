@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>字段</title>
+<!-- 引入的css文件  -->
+<link th:href="@{/Bootstrap/bootstrap.min.css}" rel="stylesheet" />
+<!-- 引入的js文件 -->
+<script th:src="@{/Bootstrap/jquery-1.9.1.min.js}"></script>
+<script th:src="@{/Bootstrap/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div class="container">
+		<form class="form-horizontal" th:action="@{/api/column/update}" th:object="${entity}"
+			method="post">
+			<!--隐藏域  -->
+			<input type="hidden" name="sid" th:value="*{sid}" />
+			<input type="hidden" name="version" th:value="*{version}" />
+			<div class="form-group">
+				<label for="name" class="col-sm-2 control-label">名称</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="name"
+						id="name" th:value="*{name}" placeholder="在此输入名称" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="code" class="col-sm-2 control-label">字段名称</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="code"
+						id="code" th:value="*{code}" placeholder="在此输入字段名称" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="type" class="col-sm-2 control-label">数据类型</label>
+				<div class="col-sm-10">
+					<select name="type"  id="type" class="form-control" th:field="*{type}">
+						<option th:each="map:${dataType}" th:text="${map.key}" th:value="${map.value}" th:selected="${type eq map.value}">
+    					</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="length" class="col-sm-2 control-label">长度</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="length"
+						id="length" th:value="*{length}" placeholder="在此输入长度" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="decimal" class="col-sm-2 control-label">精度</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="decimal"
+						id="decimal" th:value="*{decimal}"  placeholder="在此输入精度" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="required" class="col-sm-2 control-label">是否必填</label>
+				<div class="col-sm-10">
+					<div class="form-control">
+					<input type ="checkbox" name="required" th:field="*{required}"
+						th:each ="map : ${requiredMap}"
+						th:value="${map.value}"
+						th:text ="${map.key}"
+						th:attr ="checked=${map.value eq required ? true : false}">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="primary" class="col-sm-2 control-label">是否主键</label>
+				<div class="col-sm-10">
+					<div class="form-control">
+						<input type ="checkbox" name="primary" th:field="*{primary}"
+						th:each ="map : ${primaryMap}"
+						th:value="${map.value}"
+						th:text ="${map.key}"
+						th:attr ="checked=${map.value eq primary ? true : false}">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="defaultValue" class="col-sm-2 control-label">默认值</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="defaultValue"
+						id="defaultValue" th:value="*{defaultValue}"  placeholder="在此输入默认值" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="comment" class="col-sm-2 control-label">注释</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="comment"
+						id="comment" th:value="*{comment}" placeholder="在此输入注释" />
+				</div>
+			</div>
+			<!--
+			<div class="form-group">
+				<label for="desc" class="col-sm-2 control-label">描述</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="desc"
+						id="desc" placeholder="在此输入描述" />
+				</div>
+			</div> -->
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="submit" value="提交" class="btn btn-info" /> &nbsp;
+					&nbsp; &nbsp; <a href="javascript:history.go(-1);">返回</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

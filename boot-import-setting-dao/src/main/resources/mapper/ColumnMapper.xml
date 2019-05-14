@@ -3,9 +3,8 @@
 <mapper namespace="com.zzg.mapper.ColumnMapper">
   <resultMap id="BaseResultMap" type="com.zzg.entity.Column">
     <id column="sid" jdbcType="VARCHAR" property="sid" />
-    <result column="alias" jdbcType="VARCHAR" property="alias" />
     <result column="name_" jdbcType="VARCHAR" property="name" />
-    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="type_" jdbcType="VARCHAR" property="type" />
     <result column="length" jdbcType="INTEGER" property="length" />
     <result column="decimal_" jdbcType="INTEGER" property="decimal" />
     <result column="required" jdbcType="VARCHAR" property="required" />
@@ -21,32 +20,32 @@
     <result column="state" jdbcType="VARCHAR" property="state" />
     <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
     <result column="code_" jdbcType="VARCHAR" property="code" />
+    <result column="desc_" jdbcType="VARCHAR" property="desc" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from ucas_bus_column
     where sid = #{sid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.zzg.entity.Column">
-    insert into ucas_bus_column (sid, `alias`, name_, 
-      `type`, `length`, decimal_, 
+    insert into ucas_bus_column (sid, name_, 
+      `type_`, `length`, decimal_, 
       required, primary_, default_value, 
       comment_, create_dt, create_by, 
       update_dt, update_by, bus_table_id, 
       version, `state`, delete_flag, 
-      code_)
-    values (#{sid,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      code_,desc_)
+    values (#{sid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{type,jdbcType=VARCHAR}, #{length,jdbcType=INTEGER}, #{decimal,jdbcType=INTEGER}, 
       #{required,jdbcType=VARCHAR}, #{primary,jdbcType=VARCHAR}, #{defaultValue,jdbcType=VARCHAR}, 
       #{comment,jdbcType=VARCHAR}, #{createDt,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, 
       #{updateDt,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{busTableId,jdbcType=VARCHAR}, 
       #{version,jdbcType=INTEGER}, #{state,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=VARCHAR}, 
-      #{code,jdbcType=VARCHAR})
+      #{code,jdbcType=VARCHAR},#{desc,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.zzg.entity.Column">
     update ucas_bus_column
-    set `alias` = #{alias,jdbcType=VARCHAR},
-      name_ = #{name,jdbcType=VARCHAR},
-      `type` = #{type,jdbcType=VARCHAR},
+    set name_ = #{name,jdbcType=VARCHAR},
+      `type_` = #{type,jdbcType=VARCHAR},
       `length` = #{length,jdbcType=INTEGER},
       decimal_ = #{decimal,jdbcType=INTEGER},
       required = #{required,jdbcType=VARCHAR},
@@ -61,20 +60,82 @@
       version = #{version,jdbcType=INTEGER},
       `state` = #{state,jdbcType=VARCHAR},
       delete_flag = #{deleteFlag,jdbcType=VARCHAR},
-      code_ = #{code,jdbcType=VARCHAR}
+      code_ = #{code,jdbcType=VARCHAR},
+      desc_ = #{desc,jdbcType=VARCHAR}
     where sid = #{sid,jdbcType=VARCHAR}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select sid, `alias`, name_, `type`, `length`, decimal_, required, primary_, default_value, 
+    select sid, name_, `type_`, `length`, decimal_, required, primary_, default_value, 
     comment_, create_dt, create_by, update_dt, update_by, bus_table_id, version, `state`, 
-    delete_flag, code_
+    delete_flag, code_, desc_
     from ucas_bus_column
     where sid = #{sid,jdbcType=VARCHAR}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select sid, `alias`, name_, `type`, `length`, decimal_, required, primary_, default_value, 
+    select sid, name_, `type_`, `length`, decimal_, required, primary_, default_value, 
     comment_, create_dt, create_by, update_dt, update_by, bus_table_id, version, `state`, 
-    delete_flag, code_
+    delete_flag, code_, desc_
     from ucas_bus_column
   </select>
+  
+  <!--通用更新语句  -->
+  <update id="updateDeleteFlag" parameterType="map">
+  		update ucas_bus_column
+		<set>
+			<if test="state != null and  state != ''">
+				`state` = #{state,jdbcType=VARCHAR},
+			</if>
+			<if test="deleteFlag != null and  deleteFlag != ''">
+				delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+			</if>
+			version = version + 1,
+      		update_dt = now()
+		</set>
+		where 1 =1
+		<if test="sid != null and  sid != ''">
+			and sid = #{sid,jdbcType=VARCHAR}
+		</if>
+		<if test="version !=null and version !=''">
+			and version = #{version, jdbcType=INTEGER}
+		</if>
+  </update>
+  <update id="update" parameterType="com.zzg.entity.Column">
+  		update ucas_bus_column
+		<set>
+			<if test="name != null and name !=''">
+				name_ = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null and type !=''">
+				`type_` = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="length != null">
+				`length` = #{length,jdbcType=INTEGER},
+			</if>
+			<if test="decimal != null">
+				decimal_ = #{decimal,jdbcType=INTEGER},
+			</if>
+			<if test="required != null and required !=''">
+				required = #{required,jdbcType=VARCHAR},
+			</if>
+			<if test="primary != null and primary !=''">
+				 primary_ = #{primary,jdbcType=VARCHAR},
+			</if>
+			<if test="defaultValue != null and defaultValue !=''">
+				 default_value = #{defaultValue,jdbcType=VARCHAR},
+			</if>
+			<if test="comment != null and comment !=''">
+				 comment_ = #{comment,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null and code !=''">
+				 code_ = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="desc != null and desc !=''">
+				desc_ = #{desc,jdbcType=VARCHAR},
+			</if>
+			version = version + 1,
+      		update_dt = now()
+		</set>
+		
+		where sid = #{sid,jdbcType=VARCHAR} and version = #{version, jdbcType=INTEGER}
+  </update>
 </mapper>

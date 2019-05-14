@@ -52,4 +52,10 @@ public class ColumnWidgetServiceImpl implements ColumnWidgetService {
 		return mapper.updateDeleteFlag(map);
 	}
 
+	@Override
+	public int update(ColumnWidget record) {
+		// TODO Auto-generated method stub
+		return mapper.update(record);
+	}
+
 }

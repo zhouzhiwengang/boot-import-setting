@@ -6,7 +6,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title></title>
+<title>字段</title>
 <!-- 引入的css文件  -->
 <link rel="stylesheet" type="text/css" th:href="@{/Bootstrap/style.css}" />
 <link th:href="@{/Bootstrap/bootstrap.min.css}" rel="stylesheet" />
@@ -41,39 +41,36 @@
             </div>
 
 			<div class="export">
-				<a th:href="@{/api/column-widget/insertPage}"
+				<a th:href="@{/api/column/insertPage}"
 					class="btn btn-info btn-sm">添加</a>
 			</div>
 			<table class="table table-striped">
 				<tr>
-					<th class="col-md-1">控件名称</th>
-					<th class="col-md-2">控件类型</th>
-					<th class="col-md-1">控件内容</th>
-					<th class="col-md-1">控件设置</th>
-					<th class="col-md-1">字典编码</th>
-					<th class="col-md-1">创建人</th>
-					<th class="col-md-1">创建时间</th>
-					<th class="col-md-1">更新时间</th>
-					<th class="col-md-1">更新人</th>
+					<th class="col-md-1">名称</th>
+					<th class="col-md-1">字段名称</th>
+					<th class="col-md-1">数据类型</th>
+					<th class="col-md-1">长度</th>
+					<th class="col-md-1">精度</th>
+					<th class="col-md-1">是否必填</th>
+					<th class="col-md-1">是否主键</th>
+					<th class="col-md-1">默认值</th>
+					<th class="col-md-1">注释</th>
 					<th class="col-md-1">状态</th>
 					<th class="col-md-1">删除标识</th>
-					<th class="col-md-2">操作</th>
+					<th class="col-md-1">操作</th>
 				</tr>
 				<!--Thymeleaf迭代语句each  -->
 				<tr th:each="obj : ${pageInfo.list}">
-					<td th:text="${obj.widgetName}"></td>
+					<td th:text="${obj.name}"></td>
+					<td th:text="${obj.code}"></td>
+					<td th:text="${obj.type}"></td>
+					<td th:text="${obj.length}"></td>
+					<td th:text="${obj.decimal}"></td>
+					<td th:text="${obj.required}"></td>
+					<td th:text="${obj.primary}"></td>
+					<td th:text="${obj.defaultValue}"></td>
+					<td th:text="${obj.comment}"></td>
 					
-					<!--Thymeleaf 判断语句:if 和 switch  -->
-					<td th:if="${obj.widgetType} == 1" th:text="本地"></td>
-					<td th:if="${obj.widgetType} == 2" th:text="数据字典"></td>
-					
-					<td th:text="${obj.widgetValue}"></td>
-					<td th:text="${obj.widgetSett}"></td>
-					<td th:text="${obj.dictCode}"></td>
-					<td th:text="${obj.createBy}"></td>
-					<td th:text="${#dates.format(obj.createDt,'yyyy-MM-dd')}"></td>
-					<td th:text="${#dates.format(obj.updateDt,'yyyy-MM-dd')}"></td>
-					<td th:text="${obj.updateBy}"></td>
 					<!--Thymeleaf 判断语句:if 和 switch  -->
 					<td th:if="${obj.state} == 1" th:text="启用"></td>
 					<td th:if="${obj.state} == 2" th:text="禁用"></td>
@@ -82,9 +79,9 @@
 					<td th:if="${obj.deleteFlag} == 2" th:text="已删除"></td>
 					<td>
 						<!--单个参数值传递  --> <a
-						th:href="@{/api/column-widget/updatePage(sid=${obj.sid})}"
+						th:href="@{/api/column/updatePage(sid=${obj.sid})}"
 						class="btn btn-info btn-sm">修改</a> <!--多个参数值传递  --> <a
-						th:href="@{/api/column-widget/delete(sid=${obj.sid},version=${obj.version})}"
+						th:href="@{/api/column/delete(sid=${obj.sid},version=${obj.version})}"
 						class="btn btn-info btn-sm">删除</a>
 					</td>
 				</tr>

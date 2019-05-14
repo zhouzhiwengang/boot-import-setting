@@ -29,6 +29,8 @@ public class ColumnWidget extends BaseEntity {
     private String deleteFlag;
 
     private String state;
+    
+    private Integer valueSource;
 
     private static final long serialVersionUID = 1L;
 
@@ -135,8 +137,16 @@ public class ColumnWidget extends BaseEntity {
     public void setState(String state) {
         this.state = state == null ? null : state.trim();
     }
+    
+    public Integer getValueSource() {
+		return valueSource;
+	}
 
-    @Override
+	public void setValueSource(Integer valueSource) {
+		this.valueSource = valueSource;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
@@ -155,6 +165,7 @@ public class ColumnWidget extends BaseEntity {
         sb.append(", version=").append(version);
         sb.append(", deleteFlag=").append(deleteFlag);
         sb.append(", state=").append(state);
+        sb.append(", valueSource=").append(valueSource);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -26,10 +26,22 @@ public class Table extends BaseEntity {
     private String deleteFlag;
 
     private String code;
+    
+    private String entity;
 
     private static final long serialVersionUID = 1L;
+    
+    
 
-    public String getSid() {
+    public String getEntity() {
+		return entity;
+	}
+
+	public void setEntity(String entity) {
+		this.entity = entity == null ? null : entity.trim();;
+	}
+
+	public String getSid() {
         return sid;
     }
 

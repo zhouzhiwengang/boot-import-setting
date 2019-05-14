@@ -1,7 +1,14 @@
 package com.zzg.mapper;
 
+import java.util.Map;
+
 import com.zzg.common.core.mapper.BaseMapper;
 import com.zzg.entity.Table;
 
 public interface TableMapper extends BaseMapper<Table> {
+	// 更新通用功能
+	int updateDeleteFlag(Map map);
+
+	int update(Table record);
+
 }

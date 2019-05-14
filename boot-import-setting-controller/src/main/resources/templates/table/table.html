@@ -6,7 +6,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title></title>
+<title>表</title>
 <!-- 引入的css文件  -->
 <link rel="stylesheet" type="text/css" th:href="@{/Bootstrap/style.css}" />
 <link th:href="@{/Bootstrap/bootstrap.min.css}" rel="stylesheet" />
@@ -41,16 +41,15 @@
             </div>
 
 			<div class="export">
-				<a th:href="@{/api/column-widget/insertPage}"
+				<a th:href="@{/api/table/insertPage}"
 					class="btn btn-info btn-sm">添加</a>
 			</div>
 			<table class="table table-striped">
 				<tr>
-					<th class="col-md-1">控件名称</th>
-					<th class="col-md-2">控件类型</th>
-					<th class="col-md-1">控件内容</th>
-					<th class="col-md-1">控件设置</th>
-					<th class="col-md-1">字典编码</th>
+					<th class="col-md-1">表名称</th>
+					<th class="col-md-1">表名</th>
+					<th class="col-md-1">实体名称</th>
+					<th class="col-md-1">描述</th>
 					<th class="col-md-1">创建人</th>
 					<th class="col-md-1">创建时间</th>
 					<th class="col-md-1">更新时间</th>
@@ -61,15 +60,10 @@
 				</tr>
 				<!--Thymeleaf迭代语句each  -->
 				<tr th:each="obj : ${pageInfo.list}">
-					<td th:text="${obj.widgetName}"></td>
-					
-					<!--Thymeleaf 判断语句:if 和 switch  -->
-					<td th:if="${obj.widgetType} == 1" th:text="本地"></td>
-					<td th:if="${obj.widgetType} == 2" th:text="数据字典"></td>
-					
-					<td th:text="${obj.widgetValue}"></td>
-					<td th:text="${obj.widgetSett}"></td>
-					<td th:text="${obj.dictCode}"></td>
+					<td th:text="${obj.name}"></td>
+					<td th:text="${obj.code}"></td>
+					<td th:text="${obj.entity}"></td>
+					<td th:text="${obj.comment}"></td>
 					<td th:text="${obj.createBy}"></td>
 					<td th:text="${#dates.format(obj.createDt,'yyyy-MM-dd')}"></td>
 					<td th:text="${#dates.format(obj.updateDt,'yyyy-MM-dd')}"></td>
@@ -81,11 +75,15 @@
 					<td th:if="${obj.deleteFlag} == 1" th:text="未删除"></td>
 					<td th:if="${obj.deleteFlag} == 2" th:text="已删除"></td>
 					<td>
-						<!--单个参数值传递  --> <a
-						th:href="@{/api/column-widget/updatePage(sid=${obj.sid})}"
-						class="btn btn-info btn-sm">修改</a> <!--多个参数值传递  --> <a
-						th:href="@{/api/column-widget/delete(sid=${obj.sid},version=${obj.version})}"
+						<!--单个参数值传递  --> 
+						<a th:href="@{/api/table/updatePage(sid=${obj.sid})}"
+						class="btn btn-info btn-sm">修改</a> 
+						<!--多个参数值传递  --> 
+						<a th:href="@{/api/table/delete(sid=${obj.sid},version=${obj.version})}"
 						class="btn btn-info btn-sm">删除</a>
+						<!-- 表字段绑定  -->
+						<a th:href="@{/api/table/delete(sid=${obj.sid},version=${obj.version})}"
+						class="btn btn-info btn-sm">绑定</a>
 					</td>
 				</tr>
 			</table>

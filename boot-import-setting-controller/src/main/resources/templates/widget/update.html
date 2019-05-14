@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>字段验证器</title>
+<!-- 引入的css文件  -->
+<link th:href="@{/Bootstrap/bootstrap.min.css}" rel="stylesheet" />
+<!-- 引入的js文件 -->
+<script th:src="@{/Bootstrap/jquery-1.9.1.min.js}"></script>
+<script th:src="@{/Bootstrap/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div class="container">
+		<form class="form-horizontal" th:action="@{/api/column-widget/update}" th:object="${entity}"
+			method="post">
+			<!--隐藏域  -->
+			<input type="hidden" name="sid" th:value="*{sid}" />
+			<input type="hidden" name="version" th:value="*{version}" />
+			<div class="form-group">
+				<label for="widgetName" class="col-sm-2 control-label">控件名称</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="widgetName"
+						id="widgetName" th:value="*{widgetName}" placeholder="在此输入控件名称" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="widgetType" class="col-sm-2 control-label">控件类型</label>
+				<div class="col-sm-10">
+					<select name="widgetType"  id="widgetType" class="form-control">
+						<option value="1" th:selected="${widgetType == 1}">字符串</option>
+                     	<option value="2" th:selected="${widgetType == 2}">文本</option>
+                     	<option value="3" th:selected="${widgetType == 3}">日期</option>
+						<option value="4" th:selected="${widgetType == 4}">数字</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="valueSource" class="col-sm-2 control-label">控件值来源</label>
+				<div class="col-sm-10">
+					<select name="valueSource"  id="valueSource" class="form-control">
+						<option value="1" th:selected="${valueSource == 1}">本地</option>
+                     	<option value="2" th:selected="${valueSource == 2}">数据字典</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="widgetType" class="col-sm-2 control-label">控件内容</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="widgetValue"
+						id="widgetValue" th:value="*{widgetValue}" placeholder="在此输入widgetType" />
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="widgetSett" class="col-sm-2 control-label">控件设置</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="widgetSett"
+						id="widgetSett" th:value="*{widgetSett}" placeholder="在此输入widgetType" />
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="dictCode" class="col-sm-2 control-label">字典编码</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="dictCode"
+						id="dictCode" th:value="*{dictCode}" placeholder="在此输入widgetType" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="submit" value="提交" class="btn btn-info" /> &nbsp;
+					&nbsp; &nbsp; <a href="javascript:history.go(-1);">返回</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

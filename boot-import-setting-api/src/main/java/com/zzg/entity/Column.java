@@ -7,9 +7,7 @@ import com.zzg.common.core.model.BaseEntity;
 
 public class Column extends BaseEntity{
     private String sid;
-
-    private String alias;
-
+    
     private String name;
 
     private String type;
@@ -43,23 +41,25 @@ public class Column extends BaseEntity{
     private String deleteFlag;
 
     private String code;
+    
+    private String desc;
 
     private static final long serialVersionUID = 1L;
+    
+    public String getDesc() {
+		return desc;
+	}
 
-    public String getSid() {
+	public void setDesc(String desc) {
+		this.desc = desc == null ? null : sid.trim();
+	}
+
+	public String getSid() {
         return sid;
     }
 
     public void setSid(String sid) {
         this.sid = sid == null ? null : sid.trim();
-    }
-
-    public String getAlias() {
-        return alias;
-    }
-
-    public void setAlias(String alias) {
-        this.alias = alias == null ? null : alias.trim();
     }
 
     public String getName() {
@@ -205,7 +205,6 @@ public class Column extends BaseEntity{
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", sid=").append(sid);
-        sb.append(", alias=").append(alias);
         sb.append(", name=").append(name);
         sb.append(", type=").append(type);
         sb.append(", length=").append(length);

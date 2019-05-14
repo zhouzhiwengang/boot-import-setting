@@ -7,4 +7,6 @@ import com.zzg.entity.ColumnWidget;
 
 public interface ColumnWidgetMapper extends BaseMapper<ColumnWidget> {
 	int updateDeleteFlag(Map map);
+	
+	int update(ColumnWidget record);
 }
