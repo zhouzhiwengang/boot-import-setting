@@ -47,17 +47,15 @@
 			<table class="table table-striped">
 				<tr>
 					<th class="col-md-1">控件名称</th>
-					<th class="col-md-2">控件类型</th>
+					<th class="col-md-1">控件类型</th>
 					<th class="col-md-1">控件内容</th>
 					<th class="col-md-1">控件设置</th>
 					<th class="col-md-1">字典编码</th>
-					<th class="col-md-1">创建人</th>
 					<th class="col-md-1">创建时间</th>
 					<th class="col-md-1">更新时间</th>
-					<th class="col-md-1">更新人</th>
 					<th class="col-md-1">状态</th>
 					<th class="col-md-1">删除标识</th>
-					<th class="col-md-2">操作</th>
+					<th class="col-md-3">操作</th>
 				</tr>
 				<!--Thymeleaf迭代语句each  -->
 				<tr th:each="obj : ${pageInfo.list}">
@@ -70,10 +68,10 @@
 					<td th:text="${obj.widgetValue}"></td>
 					<td th:text="${obj.widgetSett}"></td>
 					<td th:text="${obj.dictCode}"></td>
-					<td th:text="${obj.createBy}"></td>
+				
 					<td th:text="${#dates.format(obj.createDt,'yyyy-MM-dd')}"></td>
 					<td th:text="${#dates.format(obj.updateDt,'yyyy-MM-dd')}"></td>
-					<td th:text="${obj.updateBy}"></td>
+					
 					<!--Thymeleaf 判断语句:if 和 switch  -->
 					<td th:if="${obj.state} == 1" th:text="启用"></td>
 					<td th:if="${obj.state} == 2" th:text="禁用"></td>

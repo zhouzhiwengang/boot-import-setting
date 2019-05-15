@@ -1,55 +1,40 @@
 package com.zzg.entity;
 
-
+import java.io.Serializable;
 import java.util.Date;
+
 import com.zzg.common.core.model.BaseEntity;
 
-public class Table extends BaseEntity {
+public class DataSource extends BaseEntity {
     private String sid;
 
     private String name;
 
-    private String comment;
+    private String ip;
 
-    private Date createDt;
+    private String username;
+
+    private String passwd;
+
+    private Integer port;
 
     private String createBy;
 
-    private Date updateDt;
+    private Date createDt;
 
     private String updateBy;
 
-    private Integer version;
+    private Date updateDt;
 
     private String state;
 
     private String deleteFlag;
 
-    private String code;
-    
-    private String entity;
-    
-    private String dataSourceId;
+    private Integer version;
 
     private static final long serialVersionUID = 1L;
-    
-    public String getDataSourceId() {
-		return dataSourceId;
-	}
 
-	public void setDataSourceId(String dataSourceId) {
-		this.dataSourceId = dataSourceId == null ? null : dataSourceId.trim();;
-	}
-
-	public String getEntity() {
-		return entity;
-	}
-
-	public void setEntity(String entity) {
-		this.entity = entity == null ? null : entity.trim();
-	}
-
-	public String getSid() {
+    public String getSid() {
         return sid;
     }
 
@@ -65,20 +50,36 @@ public class Table extends BaseEntity {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getComment() {
-        return comment;
+    public String getIp() {
+        return ip;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment == null ? null : comment.trim();
+    public void setIp(String ip) {
+        this.ip = ip == null ? null : ip.trim();
     }
 
-    public Date getCreateDt() {
-        return createDt;
+    public String getUsername() {
+        return username;
     }
 
-    public void setCreateDt(Date createDt) {
-        this.createDt = createDt;
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
+    }
+
+    public String getPasswd() {
+        return passwd;
+    }
+
+    public void setPasswd(String passwd) {
+        this.passwd = passwd == null ? null : passwd.trim();
+    }
+
+    public Integer getPort() {
+        return port;
+    }
+
+    public void setPort(Integer port) {
+        this.port = port;
     }
 
     public String getCreateBy() {
@@ -89,12 +90,12 @@ public class Table extends BaseEntity {
         this.createBy = createBy == null ? null : createBy.trim();
     }
 
-    public Date getUpdateDt() {
-        return updateDt;
+    public Date getCreateDt() {
+        return createDt;
     }
 
-    public void setUpdateDt(Date updateDt) {
-        this.updateDt = updateDt;
+    public void setCreateDt(Date createDt) {
+        this.createDt = createDt;
     }
 
     public String getUpdateBy() {
@@ -105,12 +106,12 @@ public class Table extends BaseEntity {
         this.updateBy = updateBy == null ? null : updateBy.trim();
     }
 
-    public Integer getVersion() {
-        return version;
+    public Date getUpdateDt() {
+        return updateDt;
     }
 
-    public void setVersion(Integer version) {
-        this.version = version;
+    public void setUpdateDt(Date updateDt) {
+        this.updateDt = updateDt;
     }
 
     public String getState() {
@@ -129,12 +130,12 @@ public class Table extends BaseEntity {
         this.deleteFlag = deleteFlag == null ? null : deleteFlag.trim();
     }
 
-    public String getCode() {
-        return code;
+    public Integer getVersion() {
+        return version;
     }
 
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 
     @Override
@@ -145,15 +146,17 @@ public class Table extends BaseEntity {
         sb.append("Hash = ").append(hashCode());
         sb.append(", sid=").append(sid);
         sb.append(", name=").append(name);
-        sb.append(", comment=").append(comment);
-        sb.append(", createDt=").append(createDt);
+        sb.append(", ip=").append(ip);
+        sb.append(", username=").append(username);
+        sb.append(", passwd=").append(passwd);
+        sb.append(", port=").append(port);
         sb.append(", createBy=").append(createBy);
-        sb.append(", updateDt=").append(updateDt);
+        sb.append(", createDt=").append(createDt);
         sb.append(", updateBy=").append(updateBy);
-        sb.append(", version=").append(version);
+        sb.append(", updateDt=").append(updateDt);
         sb.append(", state=").append(state);
         sb.append(", deleteFlag=").append(deleteFlag);
-        sb.append(", code=").append(code);
+        sb.append(", version=").append(version);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

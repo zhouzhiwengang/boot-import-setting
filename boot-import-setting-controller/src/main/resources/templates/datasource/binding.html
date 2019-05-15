@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>表</title>
+<!-- 引入的css文件  -->
+<link rel="stylesheet" type="text/css" th:href="@{/Bootstrap/style.css}" />
+<link th:href="@{/Bootstrap/bootstrap.min.css}" rel="stylesheet" />
+<!-- 引入的js文件 -->
+<script th:src="@{/Bootstrap/jquery-1.9.1.min.js}"></script>
+<script th:src="@{/Bootstrap/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/Bootstrap/bootbox/js/bootbox.min.}"></script>
+</head>
+<body>
+	<div class="box">
+		<div class="container">
+			<div clas="form-row">
+				<div class="form-group col-md-4">
+					<label for="name" class="col-sm-2 control-label">名称</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="name"
+							id="name" readonly="readonly" th:value="${entity?.name}"/>
+					</div>
+				</div>
+				<div class="form-group col-md-4">
+					<label for="ip" class="col-sm-2 control-label">IP</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="ip"
+							id="ip" readonly="readonly" th:value="${entity?.ip}" />
+					</div>
+				</div>
+				<div class="form-group col-md-4">
+					<label for="username" class="col-sm-2 control-label">用户</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="username"
+							id="username" readonly="readonly" th:value="${entity?.username}" />
+					</div>
+				</div>
+			</div>
+			<div clas="form-row">
+				<div class="form-group col-md-4">
+					<label for="passwd" class="col-sm-2 control-label">密码</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="passwd"
+							id="passwd" readonly="readonly" th:value="${entity?.passwd}"/>
+					</div>
+				</div>
+				<div class="form-group col-md-4">
+					<label for="port" class="col-sm-2 control-label">端口</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="port"
+							id="port" readonly="readonly" th:value="${entity?.port}"/>
+					</div>
+				</div>
+				
+				<div class="form-group col-md-4">
+					<label for="state" class="col-sm-2 control-label">测试</label>
+					<div class="col-sm-10">
+						<a href="#" class="btn btn-sm btn-info">Ping</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="export">
+				<a href="#"
+					class="btn btn-info btn-sm">已绑定表</a>
+			</div>
+			<table class="table table-striped">
+				<tr>
+					<th class="col-md-1">表名称</th>
+					<th class="col-md-1">表名</th>
+					<th class="col-md-1">实体名称</th>
+					<th class="col-md-1">描述</th>
+					<th class="col-md-1">创建时间</th>
+					<th class="col-md-1">更新时间</th>
+					<th class="col-md-1">状态</th>
+					<th class="col-md-1">删除标识</th>
+					<th class="col-md-4">操作</th>
+				</tr>
+				<!--Thymeleaf迭代语句each  -->
+				<tr th:each="obj : ${bindTables}">
+					<td th:text="${obj?.name}"></td>
+					<td th:text="${obj?.code}"></td>
+					<td th:text="${obj?.entity}"></td>
+					<td th:text="${obj.comment}"></td>
+					<td th:text="${#dates.format(obj?.createDt,'yyyy-MM-dd')}"></td>
+					<td th:text="${#dates.format(obj?.updateDt,'yyyy-MM-dd')}"></td>
+					<!--Thymeleaf 判断语句:if 和 switch  -->
+					<td th:if="${obj?.state} == 1" th:text="启用"></td>
+					<td th:if="${obj?.state} == 2" th:text="禁用"></td>
+
+					<td th:if="${obj?.deleteFlag} == 1" th:text="未删除"></td>
+					<td th:if="${obj?.deleteFlag} == 2" th:text="已删除"></td>
+					<td>
+						<a th:href="@{/api/data-source/unbind(sid=${obj.sid})}"
+						class="btn btn-info btn-sm">解绑</a>
+						<a href="#" class="btn btn-info btn-sm">字段预览</a>
+						<a href="#" class="btn btn-info btn-sm">建表SQL</a>
+						<a href="#" class="btn btn-info btn-sm">模板生成</a>
+					</td>
+				</tr>
+			</table>
+			
+			<div class="export">
+				<a href="#"
+					class="btn btn-info btn-sm">未绑定表</a>
+			</div>
+			<table class="table table-striped">
+				<tr>
+					<th class="col-md-1">表名称</th>
+					<th class="col-md-1">表名</th>
+					<th class="col-md-1">实体名称</th>
+					<th class="col-md-1">描述</th>
+					<th class="col-md-1">创建时间</th>
+					<th class="col-md-1">更新时间</th>
+					<th class="col-md-1">状态</th>
+					<th class="col-md-1">删除标识</th>
+					<th class="col-md-4">操作</th>
+				</tr>
+				<!--Thymeleaf迭代语句each  -->
+				<tr th:each="obj : ${unBindTables}">
+					<td th:text="${obj?.name}"></td>
+					<td th:text="${obj?.code}"></td>
+					<td th:text="${obj?.entity}"></td>
+					<td th:text="${obj?.comment}"></td>
+					<td th:text="${#dates.format(obj?.createDt,'yyyy-MM-dd')}"></td>
+					<td th:text="${#dates.format(obj?.updateDt,'yyyy-MM-dd')}"></td>
+					<!--Thymeleaf 判断语句:if 和 switch  -->
+					<td th:if="${obj?.state} == 1" th:text="启用"></td>
+					<td th:if="${obj?.state} == 2" th:text="禁用"></td>
+
+					<td th:if="${obj?.deleteFlag} == 1" th:text="未删除"></td>
+					<td th:if="${obj?.deleteFlag} == 2" th:text="已删除"></td>
+					<td>
+						<!-- 表字段绑定  -->
+						<a th:href="@{/api/data-source/bind(sid=${obj?.sid},dataSourceId=${entity?.sid},version=${obj?.version})}"
+						class="btn btn-info btn-sm">绑定</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

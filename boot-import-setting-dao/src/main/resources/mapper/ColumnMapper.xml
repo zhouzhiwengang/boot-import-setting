@@ -132,10 +132,37 @@
 			<if test="desc != null and desc !=''">
 				desc_ = #{desc,jdbcType=VARCHAR},
 			</if>
+			<if test="busTableId !=null and busTableId !=''">
+				 bus_table_id = #{busTableId,jdbcType=VARCHAR},
+			</if>
 			version = version + 1,
       		update_dt = now()
 		</set>
 		
 		where sid = #{sid,jdbcType=VARCHAR} and version = #{version, jdbcType=INTEGER}
+  </update>
+  
+  <!--通用查询语句  -->
+  <select id="select" parameterType="map" resultMap="BaseResultMap">
+  	 select sid, name_, `type_`, `length`, decimal_, required, primary_, default_value, 
+    	comment_, create_dt, create_by, update_dt, update_by, bus_table_id, version, `state`, 
+    	delete_flag, code_, desc_
+    	from ucas_bus_column
+    	where 1 = 1
+    	<if test="busTableId != null and busTableId !=''">
+    		and bus_table_id = #{busTableId,jdbcType=VARCHAR}
+    	</if>
+    	<if test="notBusTableId != null and notBusTableId !=''">
+    		and bus_table_id is null
+    	</if>
+  </select>
+  
+  <!--特殊赋值操作null -->
+  <update id="unbind" parameterType="String">
+  		update ucas_bus_column
+  			set
+  				bus_table_id = null
+  			where sid = #{sid,jdbcType=VARCHAR}
+			
   </update>
 </mapper>

@@ -59,5 +59,7 @@
         </table>
         <table tableName="ucas_bus_table" domainObjectName="Table" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
         </table>   -->
+        <table tableName="ucase_bus_object" domainObjectName="Objects" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>
     </context>
 </generatorConfiguration>

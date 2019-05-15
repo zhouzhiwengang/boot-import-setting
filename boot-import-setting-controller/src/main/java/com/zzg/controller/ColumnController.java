@@ -115,5 +115,9 @@ public class ColumnController {
 		// 数据移除，重新跳转至字段控件首页
 		return "redirect:/api/column/allColumns";
 	}
+	
+	
+	
+	
 
 }

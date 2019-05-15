@@ -6,14 +6,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.zzg.entity.Column;
-import com.zzg.mapper.ColumnMapper;
-import com.zzg.service.ColumnService;
+import com.zzg.entity.Objects;
+import com.zzg.mapper.ObjectsMapper;
+import com.zzg.service.ObjectsService;
 
 @Service
-public class ColumnServiceImpl implements ColumnService {
+public class ObjectsServiceImpl implements ObjectsService {
 	@Autowired
-	private ColumnMapper mapper;
+	private ObjectsMapper mapper;
 
 	@Override
 	public int deleteByPrimaryKey(String sid) {
@@ -22,25 +22,25 @@ public class ColumnServiceImpl implements ColumnService {
 	}
 
 	@Override
-	public int insert(Column record) {
+	public int insert(Objects record) {
 		// TODO Auto-generated method stub
 		return mapper.insert(record);
 	}
 
 	@Override
-	public Column selectByPrimaryKey(String sid) {
+	public Objects selectByPrimaryKey(String sid) {
 		// TODO Auto-generated method stub
 		return mapper.selectByPrimaryKey(sid);
 	}
 
 	@Override
-	public List<Column> selectAll() {
+	public List<Objects> selectAll() {
 		// TODO Auto-generated method stub
 		return mapper.selectAll();
 	}
 
 	@Override
-	public int updateByPrimaryKey(Column record) {
+	public int updateByPrimaryKey(Objects record) {
 		// TODO Auto-generated method stub
 		return mapper.updateByPrimaryKey(record);
 	}
@@ -52,21 +52,9 @@ public class ColumnServiceImpl implements ColumnService {
 	}
 
 	@Override
-	public int update(Column record) {
+	public int update(Objects record) {
 		// TODO Auto-generated method stub
 		return mapper.update(record);
-	}
-
-	@Override
-	public List<Column> select(Map map) {
-		// TODO Auto-generated method stub
-		return mapper.select(map);
-	}
-
-	@Override
-	public int unbind(String sid) {
-		// TODO Auto-generated method stub
-		return mapper.unbind(sid);
 	}
 
 }

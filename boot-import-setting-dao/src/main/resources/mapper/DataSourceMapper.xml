@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzg.mapper.DataSourceMapper">
+  <resultMap id="BaseResultMap" type="com.zzg.entity.DataSource">
+    <id column="sid" jdbcType="VARCHAR" property="sid" />
+    <result column="name_" jdbcType="VARCHAR" property="name" />
+    <result column="ip_" jdbcType="VARCHAR" property="ip" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="passwd" jdbcType="VARCHAR" property="passwd" />
+    <result column="port_" jdbcType="INTEGER" property="port" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_dt" jdbcType="TIMESTAMP" property="createDt" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_dt" jdbcType="TIMESTAMP" property="updateDt" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ucas_bus_data_source
+    where sid = #{sid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zzg.entity.DataSource">
+    insert into ucas_bus_data_source (sid, name_, ip_, 
+      username, passwd, port_, 
+      create_by, create_dt, update_by, 
+      update_dt, `state`, delete_flag, 
+      version)
+    values (#{sid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, #{port,jdbcType=INTEGER}, 
+      #{createBy,jdbcType=VARCHAR}, #{createDt,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateDt,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=VARCHAR}, 
+      #{version,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zzg.entity.DataSource">
+    update ucas_bus_data_source
+    set name_ = #{name,jdbcType=VARCHAR},
+      ip_ = #{ip,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      passwd = #{passwd,jdbcType=VARCHAR},
+      port_ = #{port,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_dt = #{createDt,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_dt = #{updateDt,jdbcType=TIMESTAMP},
+      `state` = #{state,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+      version = #{version,jdbcType=INTEGER}
+    where sid = #{sid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select sid, name_, ip_, username, passwd, port_, create_by, create_dt, update_by, 
+    update_dt, `state`, delete_flag, version
+    from ucas_bus_data_source
+    where sid = #{sid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select sid, name_, ip_, username, passwd, port_, create_by, create_dt, update_by, 
+    update_dt, `state`, delete_flag, version
+    from ucas_bus_data_source
+  </select>
+  
+  <!--通用功能update  -->
+  <update id="update" parameterType="com.zzg.entity.DataSource">
+  	update ucas_bus_data_source
+  		<set>
+  			<if test="name != null and name !=''">
+  				name_ = #{name,jdbcType=VARCHAR},
+  			</if>
+  			<if test="ip != null and ip !=''">
+  				 ip_ = #{ip,jdbcType=VARCHAR},
+  			</if>
+  			<if test="username != null and username !=''">
+  				username = #{username,jdbcType=VARCHAR},
+  			</if>
+  			<if test="passwd !=null and passwd !=''">
+  				 passwd = #{passwd,jdbcType=VARCHAR},
+  			</if>
+  			<if test="port != null">
+  				 port_ = #{port,jdbcType=INTEGER},
+  			</if>
+  			version = version + 1,
+      		update_dt = now()
+  		</set>
+  		where sid = #{sid,jdbcType=VARCHAR} and version = #{version, jdbcType=INTEGER}
+  </update>
+  <!--删除功能  -->
+   <update id="updateDeleteFlag" parameterType="map">
+  		update ucas_bus_data_source
+		<set>
+			<if test="state != null and  state != ''">
+				`state` = #{state,jdbcType=VARCHAR},
+			</if>
+			<if test="deleteFlag != null and  deleteFlag != ''">
+				delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+			</if>
+			version = version + 1,
+      		update_dt = now()
+		</set>
+		where 1 =1
+		<if test="sid != null and  sid != ''">
+			and sid = #{sid,jdbcType=VARCHAR}
+		</if>
+		<if test="version !=null and version !=''">
+			and version = #{version, jdbcType=INTEGER}
+		</if>
+  </update>
+</mapper>

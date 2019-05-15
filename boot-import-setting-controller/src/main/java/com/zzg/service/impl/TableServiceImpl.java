@@ -54,4 +54,16 @@ public class TableServiceImpl implements TableService {
 		// TODO Auto-generated method stub
 		return mapper.update(record);
 	}
+
+	@Override
+	public List<Table> select(Map map) {
+		// TODO Auto-generated method stub
+		return mapper.select(map);
+	}
+
+	@Override
+	public int unbind(String sid) {
+		// TODO Auto-generated method stub
+		return mapper.unbind(sid);
+	}
 }

@@ -66,8 +66,14 @@
 					<td th:text="${obj.type}"></td>
 					<td th:text="${obj.length}"></td>
 					<td th:text="${obj.decimal}"></td>
-					<td th:text="${obj.required}"></td>
-					<td th:text="${obj.primary}"></td>
+					<!-- 
+					<td th:text="${obj.required}"></td> -->
+					<td th:if="${obj.required} == 1" th:text="是"></td>
+					<td th:if="${obj.required} == 2" th:text="否"></td>
+					<!-- 
+					<td th:text="${obj.primary}"></td> -->
+					<td th:if="${obj.primary} == 1" th:text="是"></td>
+					<td th:if="${obj.primary} == 2" th:text="否"></td>
 					<td th:text="${obj.defaultValue}"></td>
 					<td th:text="${obj.comment}"></td>
 					

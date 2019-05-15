@@ -129,7 +129,7 @@
             $('#menu').sidebarMenu({
                 data: [{
                     id: '1',
-                    text: '自定义表设置',
+                    text: '自定义表',
                     icon: 'icon-cog',
                     url: '',
                     menus: [{
@@ -152,8 +152,24 @@
                            text: '表',
                            icon: 'icon-glass',
                            url: '/api/table/allTables'
-                          }
+                       },{
+                           id: '6',
+                           text: '数据源',
+                           icon: 'icon-glass',
+                           url: '/api/data-source/allDataSources'
+                       }
                     ]
+                },{
+                	id: '7',
+                    text: '自定义业务对象',
+                    icon: 'icon-cog',
+                    url: '',
+                    menus: [{
+                    	 id: '8',
+                         text: '业务对象',
+                         icon: 'icon-glass',
+                         url: '/api/object/allObjects'
+                    }]
                 }]
             });
  

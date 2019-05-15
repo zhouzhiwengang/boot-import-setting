@@ -1,15 +1,17 @@
 package com.zzg.entity;
 
-
 import java.util.Date;
+
 import com.zzg.common.core.model.BaseEntity;
 
-public class Table extends BaseEntity {
+public class Objects extends BaseEntity {
     private String sid;
+
+    private String key;
 
     private String name;
 
-    private String comment;
+    private String desc;
 
     private Date createDt;
 
@@ -25,36 +27,22 @@ public class Table extends BaseEntity {
 
     private String deleteFlag;
 
-    private String code;
-    
-    private String entity;
-    
-    private String dataSourceId;
-
     private static final long serialVersionUID = 1L;
-    
-    public String getDataSourceId() {
-		return dataSourceId;
-	}
 
-	public void setDataSourceId(String dataSourceId) {
-		this.dataSourceId = dataSourceId == null ? null : dataSourceId.trim();;
-	}
-
-	public String getEntity() {
-		return entity;
-	}
-
-	public void setEntity(String entity) {
-		this.entity = entity == null ? null : entity.trim();
-	}
-
-	public String getSid() {
+    public String getSid() {
         return sid;
     }
 
     public void setSid(String sid) {
         this.sid = sid == null ? null : sid.trim();
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key == null ? null : key.trim();
     }
 
     public String getName() {
@@ -65,12 +53,12 @@ public class Table extends BaseEntity {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getComment() {
-        return comment;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment == null ? null : comment.trim();
+    public void setDesc(String desc) {
+        this.desc = desc == null ? null : desc.trim();
     }
 
     public Date getCreateDt() {
@@ -129,14 +117,6 @@ public class Table extends BaseEntity {
         this.deleteFlag = deleteFlag == null ? null : deleteFlag.trim();
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -144,8 +124,9 @@ public class Table extends BaseEntity {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", sid=").append(sid);
+        sb.append(", key=").append(key);
         sb.append(", name=").append(name);
-        sb.append(", comment=").append(comment);
+        sb.append(", desc=").append(desc);
         sb.append(", createDt=").append(createDt);
         sb.append(", createBy=").append(createBy);
         sb.append(", updateDt=").append(updateDt);
@@ -153,7 +134,6 @@ public class Table extends BaseEntity {
         sb.append(", version=").append(version);
         sb.append(", state=").append(state);
         sb.append(", deleteFlag=").append(deleteFlag);
-        sb.append(", code=").append(code);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

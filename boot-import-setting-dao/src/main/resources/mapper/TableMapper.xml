@@ -14,6 +14,7 @@
     <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
     <result column="code_" jdbcType="VARCHAR" property="code" />
     <result column="entity_" jdbcType="VARCHAR" property="entity" />
+    <result column="data_source_id" jdbcType="VARCHAR" property="dataSourceId" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from ucas_bus_table
@@ -23,11 +24,11 @@
     insert into ucas_bus_table (sid, name_, comment_, 
       create_dt, create_by, update_dt, 
       update_by, version, `state`, 
-      delete_flag, code_, entity_)
+      delete_flag, code_, entity_,data_source_id)
     values (#{sid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
       #{createDt,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{updateDt,jdbcType=TIMESTAMP}, 
       #{updateBy,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}, #{state,jdbcType=VARCHAR}, 
-      #{deleteFlag,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{entity,jdbcType=VARCHAR})
+      #{deleteFlag,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{entity,jdbcType=VARCHAR},#{dataSourceId,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.zzg.entity.Table">
     update ucas_bus_table
@@ -41,18 +42,19 @@
       `state` = #{state,jdbcType=VARCHAR},
       delete_flag = #{deleteFlag,jdbcType=VARCHAR},
       code_ = #{code,jdbcType=VARCHAR},
-      entity_ = #{entity,jdbcType=VARCHAR}
+      entity_ = #{entity,jdbcType=VARCHAR},
+      data_source_id = #{dataSourceId,jdbcType=VARCHAR}
     where sid = #{sid,jdbcType=VARCHAR}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select sid, name_, comment_, create_dt, create_by, update_dt, update_by, version, 
-    `state`, delete_flag, code_, entity_
+    `state`, delete_flag, code_, entity_,data_source_id
     from ucas_bus_table
     where sid = #{sid,jdbcType=VARCHAR}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select sid, name_, comment_, create_dt, create_by, update_dt, update_by, version, 
-    `state`, delete_flag, code_, entity_
+    `state`, delete_flag, code_, entity_,data_source_id
     from ucas_bus_table
   </select>
   
@@ -93,8 +95,33 @@
   				<if test="entity != null and entity != ''">
   					 entity_ = #{entity,jdbcType=VARCHAR},
   				</if>
+  				<if test="dataSourceId != null and dataSourceId !=''">
+  					 data_source_id = #{dataSourceId,jdbcType=VARCHAR},
+  				</if>
   			</set>
   		where sid = #{sid,jdbcType=VARCHAR} and version = #{version, jdbcType=INTEGER}
-  	
   	</update>
+  	
+    <!--通用查询语句  -->
+  <select id="select" parameterType="map" resultMap="BaseResultMap">
+  	  select sid, name_, comment_, create_dt, create_by, update_dt, update_by, version, 
+    `state`, delete_flag, code_, entity_,data_source_id
+    from ucas_bus_table
+    	where 1 = 1
+    	<if test="dataSourceId != null and dataSourceId !=''">
+    		and data_source_id = #{dataSourceId,jdbcType=VARCHAR}
+    	</if>
+    	<if test="notDataSourceId != null and notDataSourceId !=''">
+    		and data_source_id is null
+    	</if>
+  </select>
+  
+  <!--特殊赋值操作null -->
+  <update id="unbind" parameterType="String">
+  		update ucas_bus_table
+  			set
+  				data_source_id = null
+  			where sid = #{sid,jdbcType=VARCHAR}
+			
+  </update>
 </mapper>

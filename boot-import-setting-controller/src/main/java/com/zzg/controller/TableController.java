@@ -16,9 +16,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zzg.common.core.id.generator.IdGenerator;
 import com.zzg.constant.GlobalConstant;
-import com.zzg.constant.MySQLConstant;
 import com.zzg.entity.Column;
 import com.zzg.entity.Table;
+import com.zzg.service.ColumnService;
 import com.zzg.service.TableService;
 
 @Controller
@@ -26,6 +26,8 @@ import com.zzg.service.TableService;
 public class TableController {
 	@Autowired
 	private TableService service;
+	@Autowired
+	private ColumnService columnService;
 
 	// 分页查询
 	@RequestMapping("/allTables")
@@ -100,6 +102,44 @@ public class TableController {
 		service.updateDeleteFlag(parames);
 		// 数据移除，重新跳转至字段控件首页
 		return "redirect:/api/table/allTables";
+	}
+
+	// 绑定页面
+	@RequestMapping(value = "/binding")
+	public String binding(Model model, String sid) {
+		// 表数据查询
+		Table entity = service.selectByPrimaryKey(sid);
+		model.addAttribute("entity", entity);
+		// 表涉及已绑定字段查询
+		Map<String, Object> bindParame = new HashMap<String, Object>();
+		bindParame.put("busTableId", sid);
+		List<Column> bindColumns = columnService.select(bindParame);
+		model.addAttribute("bindColumns", bindColumns);
+		// 表涉及未绑定字段查询
+		Map<String, Object> unBindParame = new HashMap<String, Object>();
+		unBindParame.put("notBusTableId", sid);
+		List<Column> unBindColumns = columnService.select(unBindParame);
+		model.addAttribute("unbindColumns", unBindColumns);
+
+		return "table/binding";
+	}
+
+	// 字段绑定指定表
+	@RequestMapping(value = "/bind")
+	public String bind(String sid, String busTableId, Integer version) {
+		Column record = new Column();
+		record.setSid(sid);
+		record.setBusTableId(busTableId);
+		record.setVersion(version);
+		columnService.update(record);
+		return "redirect:/api/table/binding";
+	}
+
+	// 指定字段移除表
+	@RequestMapping(value = "/unbind")
+	public String unbind(String sid) {
+		columnService.unbind(sid);
+		return "redirect:/api/table/binding";
 	}
 
 }
