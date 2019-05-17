@@ -11,7 +11,7 @@
  Target Server Version : 80015
  File Encoding         : 65001
 
- Date: 15/05/2019 18:36:07
+ Date: 17/05/2019 19:04:04
 */
 
 SET NAMES utf8mb4;
@@ -154,6 +154,45 @@ CREATE TABLE `ucas_bus_data_source`  (
 INSERT INTO `ucas_bus_data_source` VALUES ('1128513987386933248', '城建档案数据库', '192.168.1.74', 'root', '123456', 3306, NULL, '2019-05-15 04:14:36', NULL, '2019-05-15 12:15:48', '1', '1', 3);
 
 -- ----------------------------
+-- Table structure for ucas_bus_form_relation
+-- ----------------------------
+DROP TABLE IF EXISTS `ucas_bus_form_relation`;
+CREATE TABLE `ucas_bus_form_relation`  (
+  `sid` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `bus_object_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '业务对象id',
+  `bus_form_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '业务表单id',
+  PRIMARY KEY (`sid`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of ucas_bus_form_relation
+-- ----------------------------
+INSERT INTO `ucas_bus_form_relation` VALUES ('1129312786040619008', '1128607216279093248', '1129305113568083968');
+
+-- ----------------------------
+-- Table structure for ucas_bus_object_relation
+-- ----------------------------
+DROP TABLE IF EXISTS `ucas_bus_object_relation`;
+CREATE TABLE `ucas_bus_object_relation`  (
+  `sid` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `bus_object_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '业务对象id',
+  `parent_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '父类id',
+  `path` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '路径',
+  `depath` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '深度',
+  `rela_type` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '关系类型:(1:一对一,2:一对多)',
+  `table_type` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '表类型(1:主表,2:从表)',
+  `rela_text` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '关系字段文本',
+  `bus_table_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '业务表id',
+  PRIMARY KEY (`sid`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of ucas_bus_object_relation
+-- ----------------------------
+INSERT INTO `ucas_bus_object_relation` VALUES ('1129291104412368896', '1128607216279093248', NULL, '/erms_biz_arch_info', '1', '', '1', NULL, '1128247509081260032');
+INSERT INTO `ucas_bus_object_relation` VALUES ('1129292411789508608', '1128607216279093248', '1129291104412368896', '/erms_biz_arch_info/erms_biz_arch_204', '2', '2', '2', NULL, '1129277126441304064');
+
+-- ----------------------------
 -- Table structure for ucas_bus_table
 -- ----------------------------
 DROP TABLE IF EXISTS `ucas_bus_table`;
@@ -179,6 +218,31 @@ CREATE TABLE `ucas_bus_table`  (
 -- ----------------------------
 INSERT INTO `ucas_bus_table` VALUES ('1128247509081260032', '案卷表', '案卷实体对象', '2019-05-14 10:35:43', NULL, '2019-05-14 18:54:45', NULL, 4, '1', '2', 'erms_biz_arch_info', 'ArchInfo', NULL);
 INSERT INTO `ucas_bus_table` VALUES ('1128253174663217152', '工程基础信息表', '工程基础信息表', '2019-05-14 10:58:13', NULL, NULL, NULL, 1, '1', '1', 'erms_biz_eng_base_info', 'EngBaseInfo', '1128513987386933248');
+INSERT INTO `ucas_bus_table` VALUES ('1129277126441304064', '204科室', '204科室处理案卷', '2019-05-17 06:47:03', NULL, NULL, NULL, 1, '1', '1', 'erms_biz_arch_204', 'ArchInfo204', NULL);
+
+-- ----------------------------
+-- Table structure for ucase_bus_from
+-- ----------------------------
+DROP TABLE IF EXISTS `ucase_bus_from`;
+CREATE TABLE `ucase_bus_from`  (
+  `sid` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `name_` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `alias` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '别名',
+  `from_text` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '表单内容',
+  `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+  `create_dt` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人',
+  `update_dt` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `version` int(10) NULL DEFAULT NULL COMMENT '版本号',
+  `state` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '状态',
+  `delete_flag` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '删除标识',
+  PRIMARY KEY (`sid`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of ucase_bus_from
+-- ----------------------------
+INSERT INTO `ucase_bus_from` VALUES ('1129305113568083968', '204科室表单', 'key_204', '', NULL, '2019-05-17 08:38:15', NULL, NULL, 1, '1', '1');
 
 -- ----------------------------
 -- Table structure for ucase_bus_object
@@ -202,6 +266,7 @@ CREATE TABLE `ucase_bus_object`  (
 -- ----------------------------
 -- Records of ucase_bus_object
 -- ----------------------------
-INSERT INTO `ucase_bus_object` VALUES ('1128607216279093248', 'zh_202', '202科室业务', '202科室业务', '2019-05-15 10:25:04', NULL, '2019-05-15 18:21:37', NULL, 2, '1', '2');
+INSERT INTO `ucase_bus_object` VALUES ('1128607216279093248', 'zh_202', '202科室业务', '202科室业务', '2019-05-15 10:25:04', NULL, '2019-05-17 14:35:56', NULL, 3, '1', '2');
+INSERT INTO `ucase_bus_object` VALUES ('1128825858522480640', 'zh_201', '201科室业务', '201科室业务', '2019-05-16 00:53:52', NULL, NULL, NULL, 1, '1', '1');
 
 SET FOREIGN_KEY_CHECKS = 1;
