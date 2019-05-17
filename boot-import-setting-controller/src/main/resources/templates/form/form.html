@@ -6,7 +6,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>业务对象</title>
+<title>自定义表单</title>
 <!-- 引入的css文件  -->
 <link rel="stylesheet" type="text/css" th:href="@{/Bootstrap/style.css}" />
 <link th:href="@{/Bootstrap/bootstrap.min.css}" rel="stylesheet" />
@@ -44,14 +44,13 @@
 			</div>
 
 			<div class="export">
-				<a th:href="@{/api/object/insertPage}"
+				<a th:href="@{/api/form/insertPage}"
 					class="btn btn-info btn-sm">添加</a>
 			</div>
 			<table class="table table-striped">
 				<tr>
-					<th class="col-md-1">唯一值</th>
-					<th class="col-md-2">名称</th>
-					<th class="col-md-2">描述</th>
+					<th class="col-md-1">名称</th>
+					<th class="col-md-1">别名</th>
 					<th class="col-md-1">创建时间</th>
 					<th class="col-md-1">更新时间</th>
 					<th class="col-md-1">状态</th>
@@ -60,9 +59,8 @@
 				</tr>
 				<!--Thymeleaf迭代语句each  -->
 				<tr th:each="obj : ${pageInfo.list}">
-					<td th:text="${obj.key}"></td>
 					<td th:text="${obj.name}"></td>
-					<td th:text="${obj.desc}"></td>
+					<td th:text="${obj.alias}"></td>
 					<td th:text="${#dates.format(obj.createDt,'yyyy-MM-dd')}"></td>
 					<td th:text="${#dates.format(obj.updateDt,'yyyy-MM-dd')}"></td>
 					<!--Thymeleaf 判断语句:if 和 switch  -->
@@ -72,13 +70,11 @@
 					<td th:if="${obj.deleteFlag} == 1" th:text="未删除"></td>
 					<td th:if="${obj.deleteFlag} == 2" th:text="已删除"></td>
 					<td>
-						<!--单个参数值传递  --> <a
-						th:href="@{/api/object/updatePage(sid=${obj.sid})}"
-						class="btn btn-info btn-sm">修改</a> <!--多个参数值传递  --> <a
-						th:href="@{/api/object/delete(sid=${obj.sid},version=${obj.version})}"
-						class="btn btn-info btn-sm">删除</a> <!-- 数据源绑定表  --> 
-						<a th:href="@{/api/object-relation/relation(sid=${obj.sid})}" class="btn btn-info btn-sm">从表</a> 
-						<a th:href="@{/api/object-relation/insertPage(busObjectId=${obj.sid})}" class="btn btn-info btn-sm">主表</a>
+						<!--单个参数值传递  --> 
+						<a th:href="@{/api/form/binding(busFormId=${obj.sid})}"
+						class="btn btn-info btn-sm">绑定业务对象</a>
+						 <a th:href="@{/api/form/design(sid=${obj.sid})}"
+						class="btn btn-info btn-sm">设计表单</a> 
 					</td>
 				</tr>
 			</table>
@@ -86,7 +82,7 @@
 			<nav>
 				<ul class="pagination">
 					<li><a th:if="${not isFirstPage}"
-						th:href="@{${'api/object/allObjects'}(pageNum=${pageNum-1},pageSize=${pageSize})}"
+						th:href="@{${'api/form/allForms'}(pageNum=${pageNum-1},pageSize=${pageSize})}"
 						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 					</a> <a th:if="${isFirstPage}" href="javascript:void(0);"
 						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
@@ -96,12 +92,12 @@
 						th:if="${pageNum eq pageNo}" href="javascript:void(0);"> <span
 							th:text="${pageNo}"></span>
 					</a> <a th:if="${not (pageNum eq pageNo)}"
-						th:href="@{${'api/object/allObjects'}(pageNum=${pageNo},pageSize=${pageSize})}">
+						th:href="@{${'api/form/allForms'}(pageNum=${pageNo},pageSize=${pageSize})}">
 							<span th:text="${pageNo}"></span>
 					</a></li>
 
 					<li><a th:if="${not isLastPage}"
-						th:href="@{${'api/object/allObjects'}(pageNum=${pageNum+1},pageSize=${pageSize})}"
+						th:href="@{${'api/form/v'}(pageNum=${pageNum+1},pageSize=${pageSize})}"
 						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 					</a> <a th:if="${isLastPage}" href="javascript:void(0);"
 						aria-label="Next"> <span aria-hidden="true">&raquo;</span>

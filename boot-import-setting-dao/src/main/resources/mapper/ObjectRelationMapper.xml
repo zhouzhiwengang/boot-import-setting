@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzg.mapper.ObjectRelationMapper">
+  <resultMap id="BaseResultMap" type="com.zzg.entity.ObjectRelation">
+    <id column="sid" jdbcType="VARCHAR" property="sid" />
+    <result column="bus_object_id" jdbcType="VARCHAR" property="busObjectId" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="depath" jdbcType="INTEGER" property="depath" />
+    <result column="rela_type" jdbcType="VARCHAR" property="relaType" />
+    <result column="bus_table_id" jdbcType="VARCHAR" property="busTableId" />
+    <result column="table_type" jdbcType="VARCHAR" property="tableType" />
+    <result column="rela_text" jdbcType="LONGVARCHAR" property="relaText" />
+  </resultMap>
+  
+  <!-- 拓展  -->
+  <resultMap id="BaseResultMapPack" type="com.zzg.entity.pack.ObjectRelationPack" extends="BaseResultMap">
+  		<association property="objects" javaType="com.zzg.entity.Objects">
+  			<id column="object_sid" jdbcType="VARCHAR" property="sid" />
+    		<result column="key_" jdbcType="VARCHAR" property="key" />
+    		<result column="name_" jdbcType="VARCHAR" property="name" />
+    		<result column="desc_" jdbcType="VARCHAR" property="desc" />
+  		</association>
+  		<association property="table" javaType="com.zzg.entity.Table">
+  			<id column="table_sid" jdbcType="VARCHAR" property="sid" />
+		    <result column="table_name" jdbcType="VARCHAR" property="name" />
+		    <result column="comment_" jdbcType="VARCHAR" property="comment" />
+		    <result column="code_" jdbcType="VARCHAR" property="code" />
+		    <result column="entity_" jdbcType="VARCHAR" property="entity" />
+		    <result column="data_source_id" jdbcType="VARCHAR" property="dataSourceId" />
+  		</association>
+  </resultMap>
+  
+  <!--公共查询字段  -->
+  <sql id="Base_Column">
+  	ucas_bus_object_relation.sid, ucas_bus_object_relation.bus_object_id, ucas_bus_object_relation.parent_id, ucas_bus_object_relation.`path`, ucas_bus_object_relation.rela_type, ucas_bus_object_relation.bus_table_id,
+  	ucas_bus_object_relation.table_type, ucas_bus_object_relation.rela_text, ucas_bus_object_relation.depath,
+  	ucase_bus_object.sid as object_sid, ucase_bus_object.key_, ucase_bus_object.name_, ucase_bus_object.desc_,
+  	ucas_bus_table.sid as table_sid, ucas_bus_table.name_ as table_name, ucas_bus_table.comment_, ucas_bus_table.code_, ucas_bus_table.entity_, ucas_bus_table.data_source_id
+  </sql>
+  
+  <!--公共查询条件  -->
+  <sql id="condition">
+  	<if test="sid != null and sid != ''">
+  		and ucas_bus_object_relation.sid = #{sid,jdbcType=VARCHAR}
+  	</if>
+  	<if test="busObjectId != null and busObjectId != ''">
+  		and ucas_bus_object_relation.bus_object_id = #{busObjectId,jdbcType=VARCHAR}
+  	</if>
+  	<if test="parentId != null and parentId != ''">
+  		and ucas_bus_object_relation.parent_id = #{parentId,jdbcType=VARCHAR}
+  	</if>
+  	<if test="path != null and path != ''">
+  		and ucas_bus_object_relation.path like CONCAT(#{path,jdbcType=VARCHAR}, '%')
+  	</if>
+  	<if test="relaType != null and relaType != ''">
+  		and ucas_bus_object_relation.rela_type = #{relaType,jdbcType=VARCHAR}
+  	</if>
+  	<if test="relaType != null and relaType != ''">
+  		and ucas_bus_object_relation.rela_type = #{relaType,jdbcType=VARCHAR}
+  	</if>
+  	<if test="busTableId != null and busTableId != ''">
+  		and ucas_bus_object_relation.bus_table_id = #{busTableId,jdbcType=VARCHAR}
+  	</if>
+  	<if test="tableType != null and tableType !=''">
+  		and ucas_bus_object_relation.table_type = #{tableType,jdbcType=VARCHAR}
+  	</if>
+  </sql>
+  
+  <!--封装对象查询  -->
+  <select id="select" parameterType="map" resultMap="BaseResultMapPack">
+  	select 
+  		<include refid="Base_Column"></include>
+  	from ucas_bus_object_relation
+  	left join ucase_bus_object on ucase_bus_object.sid = ucas_bus_object_relation.bus_object_id
+  	left join ucas_bus_table on ucas_bus_table.sid = ucas_bus_object_relation.bus_table_id
+  	where 1 = 1 <include refid="condition"></include>
+  </select>
+ 
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ucas_bus_object_relation
+    where sid = #{sid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zzg.entity.ObjectRelation">
+    insert into ucas_bus_object_relation (sid, bus_object_id, parent_id, 
+      `path`, rela_type, bus_table_id, 
+      table_type, rela_text,depath)
+    values (#{sid,jdbcType=VARCHAR}, #{busObjectId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
+      #{path,jdbcType=VARCHAR}, #{relaType,jdbcType=VARCHAR}, #{busTableId,jdbcType=VARCHAR}, 
+      #{tableType,jdbcType=VARCHAR}, #{relaText,jdbcType=LONGVARCHAR}, #{depath,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zzg.entity.ObjectRelation">
+    update ucas_bus_object_relation
+    set bus_object_id = #{busObjectId,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      `path` = #{path,jdbcType=VARCHAR},
+      rela_type = #{relaType,jdbcType=VARCHAR},
+      bus_table_id = #{busTableId,jdbcType=VARCHAR},
+      table_type = #{tableType,jdbcType=VARCHAR},
+      rela_text = #{relaText,jdbcType=LONGVARCHAR},
+      depath = #{depath,jdbcType=INTEGER}
+    where sid = #{sid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select sid, bus_object_id, parent_id, `path`, rela_type, bus_table_id, table_type, 
+    rela_text,depath
+    from ucas_bus_object_relation
+    where sid = #{sid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select sid, bus_object_id, parent_id, `path`, rela_type, bus_table_id, table_type, 
+    rela_text, depath
+    from ucas_bus_object_relation
+  </select>
+</mapper>

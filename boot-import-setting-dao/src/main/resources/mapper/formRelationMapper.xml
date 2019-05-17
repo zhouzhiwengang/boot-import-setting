@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzg.mapper.formRelationMapper">
+  <resultMap id="BaseResultMap" type="com.zzg.entity.formRelation">
+    <id column="sid" jdbcType="VARCHAR" property="sid" />
+    <result column="bus_object_id" jdbcType="VARCHAR" property="busObjectId" />
+    <result column="bus_form_id" jdbcType="VARCHAR" property="busFormId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ucas_bus_form_relation
+    where sid = #{sid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zzg.entity.formRelation">
+    insert into ucas_bus_form_relation (sid, bus_object_id, bus_form_id
+      )
+    values (#{sid,jdbcType=VARCHAR}, #{busObjectId,jdbcType=VARCHAR}, #{busFormId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zzg.entity.formRelation">
+    update ucas_bus_form_relation
+    set bus_object_id = #{busObjectId,jdbcType=VARCHAR},
+      bus_form_id = #{busFormId,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select sid, bus_object_id, bus_form_id
+    from ucas_bus_form_relation
+    where sid = #{sid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select sid, bus_object_id, bus_form_id
+    from ucas_bus_form_relation
+  </select>
+  <!--通用select 查询  -->
+  <select id="select" parameterType="map" resultMap="BaseResultMap">
+  	select sid, bus_object_id, bus_form_id
+    from ucas_bus_form_relation
+    where 1=1
+    <if test="sid != null and sid !=''">
+    	and sid = #{sid,jdbcType=VARCHAR}
+    </if>
+    <if test="busObjectId != null and busObjectId !=''">
+    	and bus_object_id = #{busObjectId,jdbcType=VARCHAR}
+    </if>
+    <if test="busFormId != null and busFormId !=''">
+    	and bus_form_id = #{busFormId,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>
