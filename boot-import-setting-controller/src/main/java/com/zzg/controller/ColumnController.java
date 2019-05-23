@@ -15,17 +15,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zzg.common.core.id.generator.IdGenerator;
+import com.zzg.common.core.mysql.convert.FieldType;
+import com.zzg.common.core.mysql.convert.PropertyConvert;
 import com.zzg.constant.GlobalConstant;
 import com.zzg.constant.MySQLConstant;
 import com.zzg.entity.Column;
 import com.zzg.entity.ColumnWidget;
+import com.zzg.entity.Entity;
+import com.zzg.entity.Property;
 import com.zzg.service.ColumnService;
+import com.zzg.service.PropertyService;
 
 @Controller
 @RequestMapping("/api/column")
 public class ColumnController {
 	@Autowired
 	private ColumnService service;
+	@Autowired
+	private PropertyService propertyService;
 
 	// 分页查询
 	@RequestMapping("/allColumns")
@@ -115,9 +122,29 @@ public class ColumnController {
 		// 数据移除，重新跳转至字段控件首页
 		return "redirect:/api/column/allColumns";
 	}
-	
-	
-	
-	
+
+	// 属性实体文件创建
+	@RequestMapping(value = "/property")
+	public String property(String sid) {
+		Column column = service.selectByPrimaryKey(sid);
+		Property entity = new Property();
+		// 实体对象记录数据初始化
+		IdGenerator idWorker = new IdGenerator(0, 1);
+		String id = String.valueOf(idWorker.nextId());
+		entity.setSid(id);
+		// 默认始化值
+		entity.setCreateDt(new Date());
+		entity.setDeleteFlag(GlobalConstant.DELETE_FLAG_NO);
+		entity.setState(GlobalConstant.ENABLE);
+
+		// 字段属性设置
+		entity.setColumnId(sid);
+		entity.setPropertyName(PropertyConvert.getProperty(column.getCode()));
+		entity.setPropertyType(FieldType.getType(column.getType()));
+
+		propertyService.insert(entity);
+		// 数据移除，重新跳转至字段控件首页
+		return "redirect:/api/property/allPropertys";
+	}
 
 }

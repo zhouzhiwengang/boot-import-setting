@@ -6,7 +6,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>字段</title>
+<title>配置导入</title>
 <!-- 引入的css文件  -->
 <link rel="stylesheet" type="text/css" th:href="@{/Bootstrap/style.css}" />
 <link th:href="@{/Bootstrap/bootstrap.min.css}" rel="stylesheet" />
@@ -40,42 +40,25 @@
             </div>
 
 			<div class="export">
-				<a th:href="@{/api/column/insertPage}"
+				<a th:href="@{/api/setting/insertPage}"
 					class="btn btn-info btn-sm">添加</a>
 			</div>
 			<table class="table table-striped">
 				<tr>
-					<th class="col-md-1">名称</th>
-					<th class="col-md-1">字段名称</th>
-					<th class="col-md-1">数据类型</th>
-					<th class="col-md-1">长度</th>
-					<th class="col-md-1">精度</th>
-					<th class="col-md-1">是否必填</th>
-					<th class="col-md-1">是否主键</th>
-					<th class="col-md-1">默认值</th>
-					<th class="col-md-1">注释</th>
+					<th class="col-md-1">配置编号</th>
+					<th class="col-md-1">配置名称</th>
+					<th class="col-md-1">创建时间</th>
+					<th class="col-md-1">更新时间</th>
 					<th class="col-md-1">状态</th>
 					<th class="col-md-1">删除标识</th>
-					<th class="col-md-1">操作</th>
+					<th class="col-md-4">操作</th>
 				</tr>
 				<!--Thymeleaf迭代语句each  -->
 				<tr th:each="obj : ${pageInfo.list}">
-					<td th:text="${obj.name}"></td>
-					<td th:text="${obj.code}"></td>
-					<td th:text="${obj.type}"></td>
-					<td th:text="${obj.length}"></td>
-					<td th:text="${obj.decimal}"></td>
-					<!-- 
-					<td th:text="${obj.required}"></td> -->
-					<td th:if="${obj.required} == 1" th:text="是"></td>
-					<td th:if="${obj.required} == 2" th:text="否"></td>
-					<!-- 
-					<td th:text="${obj.primary}"></td> -->
-					<td th:if="${obj.primary} == 1" th:text="是"></td>
-					<td th:if="${obj.primary} == 2" th:text="否"></td>
-					<td th:text="${obj.defaultValue}"></td>
-					<td th:text="${obj.comment}"></td>
-					
+					<td th:text="${obj.settingNo}"></td>
+					<td th:text="${obj.settingName}"></td>
+					<td th:text="${#dates.format(obj.createDt,'yyyy-MM-dd')}"></td>
+					<td th:text="${#dates.format(obj.updateDt,'yyyy-MM-dd')}"></td>
 					<!--Thymeleaf 判断语句:if 和 switch  -->
 					<td th:if="${obj.state} == 1" th:text="启用"></td>
 					<td th:if="${obj.state} == 2" th:text="禁用"></td>
@@ -83,13 +66,16 @@
 					<td th:if="${obj.deleteFlag} == 1" th:text="未删除"></td>
 					<td th:if="${obj.deleteFlag} == 2" th:text="已删除"></td>
 					<td>
-						<!--单个参数值传递  --> <a
-						th:href="@{/api/column/updatePage(sid=${obj.sid})}"
-						class="btn btn-info btn-sm">修改</a> <!--多个参数值传递  --> <a
-						th:href="@{/api/column/delete(sid=${obj.sid},version=${obj.version})}"
+						<!--多个参数值传递  --> 
+						<a th:href="@{/api/setting/delete(sid=${obj.sid},version=${obj.version})}"
 						class="btn btn-info btn-sm">删除</a>
-						<a th:href="@{/api/column/property(sid=${obj.sid})}"
-						class="btn btn-info btn-sm">实体属性</a>
+						<!-- 表字段绑定  -->
+						<a th:href="@{/api/setting/mapping(sid=${obj.sid})}"
+						class="btn btn-info btn-sm">主表配置</a>
+						<!-- 表字段绑定  -->
+						<a th:href="@{/api/setting/master-insert(settingImportId=${obj.sid})}"
+						class="btn btn-info btn-sm">配置主表</a>
+						
 					</td>
 				</tr>
 			</table>
@@ -97,7 +83,7 @@
 			<nav>
 				<ul class="pagination">
 					<li><a th:if="${not isFirstPage}"
-						th:href="@{${'api/column-widget/allColumnWidgets'}(pageNum=${pageNum-1},pageSize=${pageSize})}"
+						th:href="@{${'api/setting/allSettings'}(pageNum=${pageNum-1},pageSize=${pageSize})}"
 						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 					</a> <a th:if="${isFirstPage}" href="javascript:void(0);"
 						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
@@ -107,12 +93,12 @@
 						th:if="${pageNum eq pageNo}" href="javascript:void(0);"> <span
 							th:text="${pageNo}"></span>
 					</a> <a th:if="${not (pageNum eq pageNo)}"
-						th:href="@{${'api/column-widget/allColumnWidgets'}(pageNum=${pageNo},pageSize=${pageSize})}">
+						th:href="@{${'api/setting/allSettings'}(pageNum=${pageNo},pageSize=${pageSize})}">
 							<span th:text="${pageNo}"></span>
 					</a></li>
 
 					<li><a th:if="${not isLastPage}"
-						th:href="@{${'api/column-widget/allColumnWidgets'}(pageNum=${pageNum+1},pageSize=${pageSize})}"
+						th:href="@{${'api/setting/allSettings'}(pageNum=${pageNum+1},pageSize=${pageSize})}"
 						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 					</a> <a th:if="${isLastPage}" href="javascript:void(0);"
 						aria-label="Next"> <span aria-hidden="true">&raquo;</span>

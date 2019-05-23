@@ -124,4 +124,16 @@
   			where sid = #{sid,jdbcType=VARCHAR}
 			
   </update>
+  
+  <!-- 通用List 查询  -->
+  <select id="selectBySids" resultMap="BaseResultMap">
+   select sid, name_, comment_, create_dt, create_by, update_dt, update_by, version, 
+    `state`, delete_flag, code_, entity_,data_source_id
+    from ucas_bus_table
+    	where ucas_bus_table.sid in
+  	 <foreach collection="list" item="sids" index="index"
+            open="(" close=")" separator=",">
+            #{sids}
+        </foreach>
+  </select>
 </mapper>

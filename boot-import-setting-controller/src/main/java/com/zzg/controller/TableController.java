@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zzg.common.core.id.generator.IdGenerator;
+import com.zzg.common.core.mysql.convert.FieldType;
+import com.zzg.common.core.mysql.convert.PropertyConvert;
 import com.zzg.constant.GlobalConstant;
 import com.zzg.entity.Column;
+import com.zzg.entity.Entity;
 import com.zzg.entity.Table;
 import com.zzg.service.ColumnService;
+import com.zzg.service.EntityService;
 import com.zzg.service.TableService;
 
 @Controller
@@ -28,6 +32,8 @@ public class TableController {
 	private TableService service;
 	@Autowired
 	private ColumnService columnService;
+	@Autowired
+	private EntityService entityService;
 
 	// 分页查询
 	@RequestMapping("/allTables")
@@ -140,6 +146,28 @@ public class TableController {
 	public String unbind(String sid) {
 		columnService.unbind(sid);
 		return "redirect:/api/table/binding";
+	}
+
+	// 生成表对应实体对象记录
+	@RequestMapping(value = "/entity")
+	public String entity(String sid) {
+		// 查询表记录
+		Table table = service.selectByPrimaryKey(sid);
+		Entity entity = new Entity();
+		// 实体对象记录数据初始化
+		IdGenerator idWorker = new IdGenerator(0, 1);
+		String id = String.valueOf(idWorker.nextId());
+		entity.setSid(id);
+		// 默认始化值
+		entity.setCreateDt(new Date());
+		entity.setDeleteFlag(GlobalConstant.DELETE_FLAG_NO);
+		entity.setState(GlobalConstant.ENABLE);
+		// 表相关属性设置
+		entity.setTableId(sid);
+		entity.setEntityPackage(table.getCode());
+		entity.setEntityObject(table.getEntity());
+		entityService.insert(entity);
+		return "redirect:/api/entity/allEntitys";
 	}
 
 }

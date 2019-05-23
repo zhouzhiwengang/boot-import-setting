@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>配置导入</title>
+<!-- 引入的css文件  -->
+<link th:href="@{/Bootstrap/bootstrap.min.css}" rel="stylesheet" />
+<!-- 引入的js文件 -->
+<script th:src="@{/Bootstrap/jquery-1.9.1.min.js}"></script>
+<script th:src="@{/Bootstrap/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div class="container">
+		<form class="form-horizontal" th:action="@{/api/setting/banding-insert}"
+			method="post">
+			<!--隐藏域  -->
+			<input type="hidden" name="entityId" th:value="*{entityId}" />
+			<input type="hidden" name="fieldId" th:value="*{propertyId}" />
+			<div class="form-group">
+				<label for="entityObject" class="col-sm-2 control-label">实体对象</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="entityObject"
+						id="entityObject"  th:value="*{entityObject}" placeholder="在此输入配置名称" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="entityPackage" class="col-sm-2 control-label">实体包名</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="entityPackage"
+						id="entityPackage" th:value="*{entityPackage}" placeholder="在此输入配置编码" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="propertyName" class="col-sm-2 control-label">实体属性</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="propertyName"
+						id="propertyName" th:value="*{propertyName}"  placeholder="在此输入配置编码" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="propertyType" class="col-sm-2 control-label">属性类型</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="propertyType"
+						id="propertyType" th:value="*{propertyType}" placeholder="在此输入配置编码" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="alias" class="col-sm-2 control-label">xml 别名</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="alias"
+						id="alias" placeholder="xml 别名" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="submit" value="提交" class="btn btn-info" /> &nbsp;
+					&nbsp; &nbsp; <a href="javascript:history.go(-1);">返回</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

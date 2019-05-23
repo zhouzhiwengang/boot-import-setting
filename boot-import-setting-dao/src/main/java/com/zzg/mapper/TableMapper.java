@@ -17,5 +17,7 @@ public interface TableMapper extends BaseMapper<Table> {
 		
 	// 表解绑指定数据源
 	int unbind(String sid);
+	
+	List<Table> selectBySids(List<String> sids);
 
 }

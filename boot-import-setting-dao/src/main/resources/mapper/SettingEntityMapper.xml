@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzg.mapper.SettingEntityMapper">
+  <resultMap id="BaseResultMap" type="com.zzg.entity.SettingEntity">
+    <id column="sid" jdbcType="VARCHAR" property="sid" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_dt" jdbcType="TIMESTAMP" property="createDt" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_dt" jdbcType="TIMESTAMP" property="updateDt" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="is_master" jdbcType="VARCHAR" property="isMaster" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="depath" jdbcType="VARCHAR" property="depath" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="entity_id" jdbcType="VARCHAR" property="entityId" />
+    <result column="setting_import_id" jdbcType="VARCHAR" property="settingImportId" />
+  </resultMap>
+  
+  <!--公共查询条件  -->
+  <sql id="condition">
+  	<if test="sid != null and sid != ''">
+  		and ucas_setting_entity.sid = #{sid,jdbcType=VARCHAR}
+  	</if>
+  	<if test="entityId != null and entityId != ''">
+  		and ucas_setting_entity.entity_id = #{entityId,jdbcType=VARCHAR}
+  	</if>
+  	<if test="parentId != null and parentId != ''">
+  		and ucas_setting_entity.parent_id = #{parentId,jdbcType=VARCHAR}
+  	</if>
+  	<if test="path != null and path != ''">
+  		and ucas_setting_entity.path like CONCAT(#{path,jdbcType=VARCHAR}, '%')
+  	</if>
+  	<if test="isMaster != null and isMaster !=''">
+  		and ucas_setting_entity.is_master = #{isMaster,jdbcType=VARCHAR}
+  	</if>
+  	<if test="settingImportId != null and settingImportId !=''">
+  		and ucas_setting_entity.setting_import_id = #{settingImportId,jdbcType=VARCHAR}
+  	</if>
+  	<if test="depath != null and depath !=''">
+  		and ucas_setting_entity.depath = #{depath,jdbcType=VARCHAR}
+  	</if>
+  </sql>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ucas_setting_entity
+    where sid = #{sid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zzg.entity.SettingEntity">
+    insert into ucas_setting_entity (sid, `state`, delete_flag, 
+      create_by, create_dt, update_by, 
+      update_dt, version, is_master, 
+      parent_id, depath, `path`, 
+      entity_id, setting_import_id)
+    values (#{sid,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createDt,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateDt,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{isMaster,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=VARCHAR}, #{depath,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
+      #{entityId,jdbcType=VARCHAR}, #{settingImportId,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zzg.entity.SettingEntity">
+    update ucas_setting_entity
+    set `state` = #{state,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_dt = #{createDt,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_dt = #{updateDt,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=INTEGER},
+      is_master = #{isMaster,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      depath = #{depath,jdbcType=VARCHAR},
+      `path` = #{path,jdbcType=VARCHAR},
+      entity_id = #{entityId,jdbcType=VARCHAR},
+      setting_import_id = #{settingImportId,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select sid, `state`, delete_flag, create_by, create_dt, update_by, update_dt, version, 
+    is_master, parent_id, depath, `path`, entity_id, setting_import_id
+    from ucas_setting_entity
+    where sid = #{sid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select sid, `state`, delete_flag, create_by, create_dt, update_by, update_dt, version, 
+    is_master, parent_id, depath, `path`, entity_id, setting_import_id
+    from ucas_setting_entity
+  </select>
+  
+  <!--通用公共查询的方法  -->
+  <select id="select" parameterType="map" resultMap="BaseResultMap">
+  	 select sid, `state`, delete_flag, create_by, create_dt, update_by, update_dt, version, 
+    is_master, parent_id, depath, `path`, entity_id, setting_import_id
+    from ucas_setting_entity
+    where 1 = 1 
+    	<include refid="condition"></include>
+  </select>
+  <delete id="delete" parameterType="map">
+  	 delete from ucas_setting_entity
+    	where 1 = 1
+    	<include refid="condition"></include>
+  </delete>
+</mapper>

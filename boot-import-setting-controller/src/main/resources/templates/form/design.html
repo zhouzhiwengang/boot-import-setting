@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>自定义表单</title>
+<!-- 引入的css文件  -->
+<link th:href="@{/Bootstrap/bootstrap.min.css}" rel="stylesheet" />
+<!-- 引入ztree 样式文件  -->
+<link th:href="@{/Bootstrap/ztree/css/zTreeStyle.css}" rel="stylesheet" />
+<link th:href="@{/Bootstrap/ztree/css/demo.css}" rel="stylesheet" />
+<!-- 引入的js文件 -->
+<script th:src="@{/Bootstrap/jquery-1.9.1.min.js}"></script>
+<script th:src="@{/Bootstrap/bootstrap/js/bootstrap.min.js}"></script>
+<!-- 引入依赖的ztree js 文件  -->
+<script th:src="@{/Bootstrap/ztree/js/jquery.ztree.core.js}"></script>
+<script th:src="@{/Bootstrap/ztree/js/jquery.ztree.excheck.js}"></script>
+</head>
+<body>
+	<div class="container">
+        <ul id="treeDemo" class="ztree"></ul>
+	</div>
+
+	</div>
+	<script type="text/javascript" th:inline="javascript">
+	 var setting = {
+             data: {
+                 simpleData: {
+                     enable: true
+                 }
+             }
+         };
+
+         var zNodes = [{
+                 id: 1,
+                 pId: 0,
+                 name: "父节点1 - 展开",
+                 open: true
+             },
+             {
+                 id: 11,
+                 pId: 1,
+                 name: "父节点11 - 折叠"
+             },
+             {
+                 id: 111,
+                 pId: 11,
+                 name: "叶子节点111"
+             },
+             {
+                 id: 112,
+                 pId: 11,
+                 name: "叶子节点112"
+             },
+             {
+                 id: 113,
+                 pId: 11,
+                 name: "叶子节点113"
+             },
+             {
+                 id: 114,
+                 pId: 11,
+                 name: "叶子节点114"
+             },
+             {
+                 id: 12,
+                 pId: 1,
+                 name: "父节点12 - 折叠"
+             },
+             {
+                 id: 121,
+                 pId: 12,
+                 name: "叶子节点121"
+             },
+             {
+                 id: 122,
+                 pId: 12,
+                 name: "叶子节点122"
+             },
+             {
+                 id: 123,
+                 pId: 12,
+                 name: "叶子节点123"
+             },
+             {
+                 id: 124,
+                 pId: 12,
+                 name: "叶子节点124"
+             },
+             {
+                 id: 13,
+                 pId: 1,
+                 name: "父节点13 - 没有子节点",
+                 isParent: true
+             },
+             {
+                 id: 2,
+                 pId: 0,
+                 name: "父节点2 - 折叠"
+             },
+             {
+                 id: 21,
+                 pId: 2,
+                 name: "父节点21 - 展开",
+                 open: true
+             },
+             {
+                 id: 211,
+                 pId: 21,
+                 name: "叶子节点211"
+             }
+         ];
+
+         $(document).ready(function() {
+             $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+         });
+	</script>
+</body>
+</html>

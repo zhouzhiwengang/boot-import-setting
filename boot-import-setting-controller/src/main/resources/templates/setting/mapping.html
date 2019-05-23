@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>业务对象表关联</title>
+<!-- 引入的css文件  -->
+<link th:href="@{/Bootstrap/bootstrap.min.css}" rel="stylesheet" />
+<!-- 引入的js文件 -->
+<script th:src="@{/Bootstrap/jquery-1.9.1.min.js}"></script>
+<script th:src="@{/Bootstrap/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div class="container">
+		
+		<div class="export">
+				<a href="#"
+					class="btn btn-info btn-sm">主</a>
+			</div>
+			<table class="table table-striped">
+				<tr>
+					<th class="col-md-2">实体包名</th>
+					<th class="col-md-2">实体对象</th>
+					<th class="col-md-4">操作</th>
+				</tr>
+				<!--Thymeleaf迭代语句each  -->
+				<tr th:each="obj : ${master}">
+					<td th:text="${obj.entityPackage}"></td>
+					<td th:text="${obj.entityObject}"></td>
+					<td>
+						 <a
+						th:href="@{/api/setting/form-entity-insert(settingImportId=*{setting_import_id},entityId=${obj.sid})}"
+						class="btn btn-info btn-sm">添加从表</a>
+						 <a
+						th:href="@{/api/setting/mapping-delete(settingImportId=*{setting_import_id}, tableId=${obj.sid}, isMaster='1')}"
+						class="btn btn-info btn-sm">移除主表</a>
+						<!-- xml字段映射绑定  -->
+						<a th:href="@{/api/setting/banding(sid=${obj.sid})}"
+						class="btn btn-info btn-sm">实体属性</a>
+					</td>
+				</tr>
+			</table>
+			
+			<div class="export">
+				<a href="#"
+					class="btn btn-info btn-sm">从</a>
+			</div>
+				<table class="table table-striped">
+				<tr>
+					<th class="col-md-2">实体包名</th>
+					<th class="col-md-2">实体对象</th>
+					<th class="col-md-4">操作</th>
+				</tr>
+				<!--Thymeleaf迭代语句each  -->
+				<tr th:each="obj : ${second}">
+					<td th:text="${obj.entityPackage}"></td>
+					<td th:text="${obj.entityObject}"></td>
+					
+					<td>
+						 <a th:href="@{/api/setting/mapping-delete(settingImportId=*{setting_import_id}, tableId=${obj.sid}, isMaster='2')}"
+						class="btn btn-info btn-sm">移除从表</a>
+						<!-- xml字段映射绑定  -->
+						<a th:href="@{/api/setting/banding(sid=${obj.sid})}"
+						class="btn btn-info btn-sm">实体属性</a>
+					</td>
+				</tr>
+			</table>
+		
+		
+	</div>
+</body>
+</html>
